@@ -57,6 +57,10 @@ nav a.activo {
     display: block;
 }
 
+.bar {
+    text-align: center;
+}
+
 /* ----------- CONTENEDOR ----------- */
 
 .contenedor {
@@ -123,4 +127,94 @@ footer {
 
 .footer-copy a:hover {
   color: white;
+}
+
+/* ----------- TARJETAS ----------- */
+
+.temporada {
+    text-align: center;
+}
+
+.verano {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.tarjeta {
+    width: 365px;
+    height: 580px;
+    box-shadow: 2px 2px 4px #666666;
+    padding-top: 30px;
+}
+
+.tarjeta p {
+    line-height: normal;
+}
+
+.imagen-tarjeta {
+    width: 366px;
+    height: 274px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.datos {
+    padding: 10px;
+}
+
+.datos p:first-child {
+    font-size: 22px;
+    text-align: center;
+    color: #666666;
+}
+
+.datos p {
+    font-size: 16px;
+}
+
+.precio {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.precio img {
+    width: 40px;
+    height: 40px;
+}
+
+.precio p {
+    font-size: 20px;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.btn {
+    text-align: center;
+    margin-top: 20px;
+}   
+
+.boton {
+    background-color: #720000;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    border-bottom: 4px solid #3a0000;
+}
+
+.boton:hover {
+    background-color: #cd2c2c;
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.boton:active {
+    background-color: #3a0000;
 }
