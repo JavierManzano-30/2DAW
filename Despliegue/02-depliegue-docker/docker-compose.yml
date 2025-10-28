@@ -1,47 +1,42 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  # Base de datos MariaDB
   db:
-    image: mariadb:10.11
+    image: mariadb:latest
     container_name: wordpress_db
-    restart: always
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword123
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppassword123
+      MARIADB_ROOT_PASSWORD: ejemplo_root_pass   # anota que no usar en producción
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wp_user
+      MARIADB_PASSWORD: wp_password
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - wordpress_network
+      - wp_net
 
-  # Aplicación WordPress
   wordpress:
     image: wordpress:latest
     container_name: wordpress_app
-    restart: always
-    ports:
-      - "8080:80"
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wpuser
-      WORDPRESS_DB_PASSWORD: wppassword123
-      WORDPRESS_DB_NAME: wordpress
-    volumes:
-      - wordpress_data:/var/www/html
     depends_on:
       - db
+    restart: unless-stopped
+    ports:
+      - "8080:80"                # acceder por http://localhost:8080
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_password
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
     networks:
-      - wordpress_network
+      - wp_net
 
-# Red Docker personalizada
-networks:
-  wordpress_network:
-    driver: bridge
-    name: wordpress_network
-
-# Volúmenes para persistencia de datos
 volumes:
   db_data:
-  wordpress_data:
+  wp_data:
+
+networks:
+  wp_net:
+    driver: bridge
