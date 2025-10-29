@@ -1,0 +1,9 @@
+Summary,Description,Issue Type,Story Points
+Crear repo base frontend (Vite + React),Inicializar Vite, dependencias y estructura mínima,Task,3
+Crear repo base backend (Express),Inicializar Express con endpoint /health y configuración básica,Task,3
+Configurar Docker Compose para PostgreSQL,Servicio db con credenciales y volumen persistente,Task,2
+Definir variables de entorno y plantillas,Crear .env.example en frontend y backend,Task,2
+Redactar README raíz con instrucciones,Explicar requisitos, instalación y arranque local,Task,2
+Integración Frontend-Backend (config API URL),Configurar VITE_API_URL y probar solicitud de salud,Task,3
+Pipeline de calidad (ESLint/Prettier opc.),Añadir linters y scripts de formato,Task,2
+Documentar arquitectura,Diagrama y justificación tecnológica en docs,Task,2
