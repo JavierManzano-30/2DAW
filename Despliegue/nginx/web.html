@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi página con petición a la API</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Mi Página con Petición a la API</h1>
+    <button id="fetchButton">Realizar Petición a la API</button>
+    <div id="response"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#fetchButton').click(function () {
+                $.get('http://localhost:3000/api/adaitsdawdocker', function (data) {
+                    $('#response').html('<p>Respuesta de la API: ' + data.message + '</p>');
+                }).fail(function () {
+                    $('#response').html('<p>Error al conectar con la API.</p>');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
