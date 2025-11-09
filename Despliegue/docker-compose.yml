@@ -1,0 +1,27 @@
+version: "3.9"
+
+networks:
+  adaitsnetwork:
+    name: adaitsnetwork
+
+services:
+  api:
+    image: api-rest-daw
+    build:
+      context: ./api
+    ports:
+      - "3000:3000"
+    networks:
+      - adaitsnetwork
+
+  nginx:
+    image: nginx-daw
+    build:
+      context: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - adaitsnetwork
+
