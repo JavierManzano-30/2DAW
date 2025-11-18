@@ -1,0 +1,889 @@
+openapi: 3.0.3
+info:
+  title: SnapNation API
+  version: 1.0.0
+  description: |
+    API REST para la plataforma de concursos fotográficos SnapNation.
+    
+    ## Autenticación
+    La mayoría de endpoints requieren autenticación mediante Bearer Token (JWT).
+    Obtén el token mediante `/auth/login` o `/auth/register`.
+    
+    ## Paginación
+    Los endpoints que devuelven listas soportan paginación mediante `page` y `limit`.
+    Las respuestas incluyen metadatos de paginación.
+    
+    ## Errores
+    Todos los errores siguen el formato estándar definido en `errores.md`.
+servers:
+  - url: https://api.snapnation.com/api/v1
+    description: Servidor de producción
+  - url: http://localhost:3000/api/v1
+    description: Servidor local
+
+tags:
+  - name: Auth
+    description: Autenticación y registro de usuarios
+  - name: Users
+    description: Gestión de usuarios
+  - name: Photos
+    description: Gestión de fotos y concursos
+  - name: Votes
+    description: Sistema de votación
+  - name: Themes
+    description: Temas y concursos activos
+  - name: Communities
+    description: Comunidades de usuarios
+  - name: Categories
+    description: Categorías de fotos
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Registro de nuevo usuario
+      description: Crea una nueva cuenta de usuario y devuelve un token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            examples:
+              example1:
+                value:
+                  username: "fotografo123"
+                  email: "fotografo@example.com"
+                  password: "SecurePass123!"
+                  community_id: 1
+      responses:
+        '201':
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+              example:
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                user:
+                  id: 1
+                  username: "fotografo123"
+                  email: "fotografo@example.com"
+                  display_name: null
+                  community_id: 1
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Inicio de sesión de usuario
+      description: Autentica un usuario y devuelve un token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              example1:
+                value:
+                  email: "fotografo@example.com"
+                  password: "SecurePass123!"
+      responses:
+        '200':
+          description: Login correcto, devuelve token JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+              example:
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                user:
+                  id: 1
+                  username: "fotografo123"
+                  email: "fotografo@example.com"
+                  display_name: "Fotógrafo Pro"
+                  community_id: 1
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /users/me:
+    get:
+      tags: [Users]
+      summary: Obtener perfil del usuario autenticado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Perfil del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /photos:
+    get:
+      tags: [Photos]
+      summary: Listar todas las fotos
+      description: Obtiene una lista paginada de fotos con filtros opcionales
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: community_id
+          in: query
+          description: Filtrar por ID de comunidad
+          schema:
+            type: integer
+        - name: theme_id
+          in: query
+          description: Filtrar por ID de tema/concurso
+          schema:
+            type: integer
+        - name: category_id
+          in: query
+          description: Filtrar por ID de categoría
+          schema:
+            type: integer
+        - name: user_id
+          in: query
+          description: Filtrar por ID de usuario
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista paginada de fotos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPhotos'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+
+    post:
+      tags: [Photos]
+      summary: Subir una nueva foto
+      description: Sube una foto al sistema. La imagen se procesa y almacena en Cloudinary.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - title
+                - theme_id
+                - image
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 150
+                  example: "Amanecer en la montaña"
+                description:
+                  type: string
+                  maxLength: 2000
+                  example: "Una foto tomada al amanecer durante una excursión"
+                theme_id:
+                  type: integer
+                  description: ID del tema/concurso al que pertenece
+                  example: 1
+                category_id:
+                  type: integer
+                  description: ID de la categoría (opcional)
+                  example: 2
+                image:
+                  type: string
+                  format: binary
+                  description: Archivo de imagen (JPG, PNG, máximo 10MB)
+      responses:
+        '201':
+          description: Foto subida correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Photo'
+              example:
+                id: 1
+                user_id: 1
+                theme_id: 1
+                community_id: 1
+                category_id: 2
+                title: "Amanecer en la montaña"
+                description: "Una foto tomada al amanecer"
+                image_url: "https://res.cloudinary.com/..."
+                thumb_url: "https://res.cloudinary.com/..."
+                is_moderated: false
+                is_deleted: false
+                created_at: "2024-01-15T10:30:00Z"
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '413':
+          description: Archivo demasiado grande
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /photos/{id}:
+    get:
+      tags: [Photos]
+      summary: Obtener una foto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de la foto
+      responses:
+        '200':
+          description: Detalles de la foto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoDetail'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      tags: [Photos]
+      summary: Eliminar una foto
+      description: Marca una foto como eliminada (soft delete). Solo el propietario puede eliminar.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Foto eliminada exitosamente
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: No tienes permiso para eliminar esta foto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /themes:
+    get:
+      tags: [Themes]
+      summary: Listar temas/concursos
+      description: Obtiene una lista de temas activos e inactivos
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: is_active
+          in: query
+          description: Filtrar por estado activo
+          schema:
+            type: boolean
+        - name: community_id
+          in: query
+          description: Filtrar por comunidad
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de temas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Theme'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+    post:
+      tags: [Themes]
+      summary: Crear un nuevo tema/concurso
+      description: Solo administradores pueden crear temas
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThemeCreate'
+      responses:
+        '201':
+          description: Tema creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theme'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Solo administradores pueden crear temas
+
+  /themes/{id}:
+    get:
+      tags: [Themes]
+      summary: Obtener un tema por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detalles del tema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theme'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /communities:
+    get:
+      tags: [Communities]
+      summary: Listar comunidades
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Lista de comunidades
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Community'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+  /communities/{id}:
+    get:
+      tags: [Communities]
+      summary: Obtener una comunidad por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detalles de la comunidad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Community'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /categories:
+    get:
+      tags: [Categories]
+      summary: Listar categorías
+      responses:
+        '200':
+          description: Lista de categorías
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+
+  /votes:
+    post:
+      tags: [Votes]
+      summary: Votar una foto
+      description: Registra un voto para una foto. Un usuario solo puede votar una vez por foto.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+            examples:
+              example1:
+                value:
+                  photo_id: 5
+      responses:
+        '201':
+          description: Voto registrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vote'
+        '400':
+          description: Error en el voto (ya votó o no permitido)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "ALREADY_VOTED"
+                message: "Ya has votado esta foto"
+                details: []
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      tags: [Votes]
+      summary: Eliminar voto
+      description: Elimina el voto del usuario autenticado para una foto
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - photo_id
+              properties:
+                photo_id:
+                  type: integer
+      responses:
+        '204':
+          description: Voto eliminado exitosamente
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Voto no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token JWT obtenido mediante /auth/login o /auth/register
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Número de página (empezando en 1)
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    LimitParam:
+      name: limit
+      in: query
+      description: Número de elementos por página
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+
+  schemas:
+    # Auth Schemas
+    RegisterRequest:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9_]+$'
+          example: "fotografo123"
+        email:
+          type: string
+          format: email
+          example: "fotografo@example.com"
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: "SecurePass123!"
+        community_id:
+          type: integer
+          description: ID de la comunidad a la que pertenece
+          example: 1
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "fotografo@example.com"
+        password:
+          type: string
+          format: password
+          example: "SecurePass123!"
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token JWT para autenticación
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        user:
+          $ref: '#/components/schemas/User'
+
+    # User Schemas
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: "fotografo123"
+        email:
+          type: string
+          format: email
+          example: "fotografo@example.com"
+        display_name:
+          type: string
+          nullable: true
+          example: "Fotógrafo Pro"
+        avatar_url:
+          type: string
+          nullable: true
+          format: uri
+          example: "https://res.cloudinary.com/..."
+        role:
+          type: string
+          enum: [user, admin]
+          example: "user"
+        community_id:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    # Photo Schemas
+    Photo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 1
+        theme_id:
+          type: integer
+          example: 1
+        community_id:
+          type: integer
+          example: 1
+        category_id:
+          type: integer
+          nullable: true
+          example: 2
+        title:
+          type: string
+          example: "Amanecer en la montaña"
+        description:
+          type: string
+          nullable: true
+          example: "Una foto tomada al amanecer"
+        image_url:
+          type: string
+          format: uri
+          example: "https://res.cloudinary.com/..."
+        thumb_url:
+          type: string
+          format: uri
+          example: "https://res.cloudinary.com/..."
+        is_moderated:
+          type: boolean
+          example: false
+        is_deleted:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    PhotoDetail:
+      allOf:
+        - $ref: '#/components/schemas/Photo'
+        - type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/User'
+            theme:
+              $ref: '#/components/schemas/Theme'
+            category:
+              $ref: '#/components/schemas/Category'
+              nullable: true
+            votes_count:
+              type: integer
+              example: 42
+            has_user_voted:
+              type: boolean
+              description: Si el usuario autenticado ha votado esta foto
+              example: false
+
+    PaginatedPhotos:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    # Theme Schemas
+    Theme:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Fotografía de Naturaleza"
+        description:
+          type: string
+          nullable: true
+          example: "Comparte tus mejores fotos de naturaleza"
+        start_date:
+          type: string
+          format: date
+          example: "2024-01-01"
+        end_date:
+          type: string
+          format: date
+          example: "2024-01-31"
+        is_active:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-01T00:00:00Z"
+
+    ThemeCreate:
+      type: object
+      required:
+        - title
+        - start_date
+        - end_date
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 150
+          example: "Fotografía de Naturaleza"
+        description:
+          type: string
+          maxLength: 2000
+          example: "Comparte tus mejores fotos de naturaleza"
+        start_date:
+          type: string
+          format: date
+          example: "2024-01-01"
+        end_date:
+          type: string
+          format: date
+          example: "2024-01-31"
+        is_active:
+          type: boolean
+          default: true
+
+    # Community Schemas
+    Community:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: string
+          example: "MADRID01"
+        name:
+          type: string
+          example: "Comunidad de Madrid"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-01T00:00:00Z"
+
+    # Category Schemas
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        slug:
+          type: string
+          example: "naturaleza"
+        name:
+          type: string
+          example: "Naturaleza"
+
+    # Vote Schemas
+    VoteRequest:
+      type: object
+      required:
+        - photo_id
+      properties:
+        photo_id:
+          type: integer
+          example: 5
+
+    Vote:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        photo_id:
+          type: integer
+          example: 5
+        user_id:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    # Common Schemas
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total de elementos disponibles
+          example: 150
+        page:
+          type: integer
+          description: Página actual
+          example: 1
+        limit:
+          type: integer
+          description: Elementos por página
+          example: 10
+        total_pages:
+          type: integer
+          description: Total de páginas
+          example: 15
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Código de error único
+          example: "PHOTO_NOT_FOUND"
+        message:
+          type: string
+          description: Mensaje de error legible
+          example: "La foto no existe o fue eliminada"
+        details:
+          type: array
+          description: Detalles adicionales del error
+          items:
+            type: object
+          example: []
+
+  responses:
+    ValidationError:
+      description: Error de validación en los datos enviados
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "VALIDATION_ERROR"
+            message: "Los datos proporcionados no son válidos"
+            details:
+              - field: "email"
+                message: "El formato del email no es válido"
+
+    UnauthorizedError:
+      description: Token no presente o inválido
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "AUTH_REQUIRED"
+            message: "Se requiere autenticación"
+            details: []
+
+    NotFoundError:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "PHOTO_NOT_FOUND"
+            message: "La foto no existe o fue eliminada"
+            details: []
+
+    ConflictError:
+      description: Conflicto (recurso ya existe)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "USER_EXISTS"
+            message: "El usuario ya existe"
+            details: []
