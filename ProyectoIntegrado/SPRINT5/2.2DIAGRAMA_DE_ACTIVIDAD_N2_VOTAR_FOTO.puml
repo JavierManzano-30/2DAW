@@ -1,0 +1,28 @@
+@startuml
+!theme plain
+
+title "Actividad: Votar Foto"
+
+start
+
+:Usuario pulsa botón Votar;
+
+:Validar autenticación;
+if (¿Usuario logueado?) then (Sí)
+
+    :Comprobar si ya votó esta foto;
+    if (¿Voto previo?) then (Sí)
+        :Mostrar mensaje: Ya has votado;
+    else (No)
+        :Registrar voto en BD;
+        :Actualizar contador de votos;
+        :Mostrar confirmación de voto;
+    endif
+
+else (No)
+    :Redireccionar a login;
+endif
+
+stop
+@enduml
+

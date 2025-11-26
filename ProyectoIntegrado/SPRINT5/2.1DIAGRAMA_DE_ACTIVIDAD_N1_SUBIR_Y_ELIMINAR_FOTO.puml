@@ -1,0 +1,46 @@
+@startuml
+!theme plain
+
+title "Actividad: Subida y Eliminación de Foto"
+
+start
+
+:Usuario inicia acción Subir Foto;
+:Verificar autenticación;
+if (¿Usuario logueado?) then (Sí)
+    :Mostrar formulario de subida;
+    :Usuario selecciona imagen y datos;
+    
+    if (¿Tema semanal activo?) then (Sí)
+        :Subir imagen a Cloudinary;
+        :Guardar metadatos en BD;
+        :Mostrar confirmación;
+        
+        fork
+            :Esperar hasta 30 min;
+        fork again
+            if (¿Usuario desea eliminar la foto?) then (Sí)
+                :Verificar tiempo y propiedad;
+                if (¿Tiempo permitido?) then (Sí)
+                    :Eliminar imagen de Cloudinary;
+                    :Eliminar registro de BD;
+                    :Notificar eliminación exitosa;
+                else (No)
+                    :Mostrar error: Tiempo expirado;
+                endif
+            else (No)
+                :Mantener foto publicada;
+            endif
+        end fork
+
+    else (No)
+        :Mostrar error: No hay tema activo;
+    endif
+
+else (No)
+    :Redireccionar al login;
+endif
+
+stop
+@enduml
+

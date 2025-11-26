@@ -1,0 +1,32 @@
+@startuml
+!theme plain
+
+title "Actividad: Creación de Tema Semanal (Administrador)"
+
+start
+
+:Administrador abre panel de Temas;
+:Seleccionar opción Crear Nuevo Tema;
+
+:Ingresar título, descripción y fechas;
+
+if (¿Fechas válidas?) then (Sí)
+    :Comprobar si existe tema activo;
+
+    if (¿Existe tema activo?) then (Sí)
+        :Desactivar tema anterior automáticamente;
+    else (No)
+        :Continuar;
+    endif
+
+    :Registrar nuevo tema como activo;
+    :Guardar en BD;
+    :Mostrar confirmación;
+
+else (No)
+    :Mostrar error: Fechas inválidas;
+endif
+
+stop
+@enduml
+

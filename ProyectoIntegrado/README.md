@@ -1,48 +1,75 @@
-# Proyecto Integrado — Sprint 3
+# 📷 SnapNation — Proyecto Intermodular (DAW 2)
 
-Este repositorio contiene la arquitectura base, los esqueletos de frontend y backend, y la preparación del entorno para comenzar el desarrollo.
+SnapNation es una plataforma fotográfica competitiva donde los usuarios pueden subir imágenes relacionadas con un **tema semanal**, votar fotos de otros usuarios y visualizar las fotografías ganadoras. Cuenta además con moderación por parte de administradores y un backend con subida a **Cloudinary**.
 
-## Arquitectura
-- Ver `docs/architecture.md` para diagrama y justificación tecnológica.
+Este proyecto forma parte del **Proyecto Integrado de 2º DAW**.
 
-## Requisitos generales
-- Node.js 18+
-- npm 9+
-- Docker (opcional para PostgreSQL local)
+---
 
-## Estructura
-- `JMO-PI-FRONT/`: Frontend (React + Vite)
-- `JMO-PI-BACK/`: Backend (Node.js + Express + PostgreSQL)
-- `docker-compose.yml`: Servicio de PostgreSQL
+### 🧩 Arquitectura General
 
-## Puesta en marcha
+| FrontEnd | BackEnd | Servicios |
+|----------|---------|-----------|
+| Vue/React/SPA (cliente) | API REST (Node, Express o similar) | Cloudinary, Base de Datos |
 
-### Base de datos (opcional con Docker)
-```bash
-docker compose up -d db
-```
-La BBDD quedará disponible en `postgres://postgres:postgres@localhost:5432/proyecto`.
+Los componentes están documentados en el **Diagrama de Componentes** incluido en la carpeta de documentación.
 
-### Backend (`JMO-PI-BACK`)
-```bash
-cd JMO-PI-BACK
-npm install
-# copia .env.example a .env y ajusta si es necesario
-npm run dev
-```
-- Salud: `GET http://localhost:3000/health`
+---
 
-### Frontend (`JMO-PI-FRONT`)
-```bash
-cd JMO-PI-FRONT
-npm install
-npm run dev
-```
-- Abre `http://localhost:5173`
+### 📌 Funcionalidades principales
 
-## Entornos
-- Desarrollo: Vite (frontend), Nodemon (backend), PostgreSQL en Docker
-- Producción: build estático frontend; backend desplegado; PostgreSQL gestionado
+👤 **Usuarios**
+- Registro e inicio de sesión
+- Subida de fotos (tema semanal)
+- Votar fotos
+- Editar perfil
+- Ver estadísticas y ganadores
 
-## Tareas de Jira
-Se incluye `docs/jira_tasks.csv` para importar tareas técnicas con estimaciones iniciales.
+🛡 **Administradores**
+- Moderar fotos (aprobar / eliminar)
+- Crear tema semanal
+- Eliminar fotos con restricción
+- Calcular ganadores
+
+📊 **Visitantes**
+- Ver galería
+- Ver foto y autor
+- Ver ganadores y temas activos
+
+---
+
+### 📎 Documentación técnica incluida
+
+- 📌 Casos de Uso
+- 🔁 Actividades (mínimo 5)
+- 📩 Diagramas de Secuencia (mínimo 3)
+- 🧱 Diagrama de Componentes
+- 📦 JSON de intercambio
+- 🗄 IE (Modelo entidad-relación)
+
+Ubicación: `/docs/sprint5/`
+
+---
+
+### 📅 Gestión del Proyecto (JIRA)
+
+Las historias y subtareas del producto están gestionadas en JIRA:
+
+📌 Ejemplos encontrados:
+- **SCRUM-59 [QA] Tests de registro**
+- **SCRUM-58 [BE] Endpoint POST /auth/register**
+- **SCRUM-57 [DB] Crear tabla users**
+- **SCRUM-56 Historia: Detalle de Foto**
+
+La documentación de cada HU se ha reflejado en los diagramas correspondientes usando PlantUML.
+
+---
+
+### 👨‍💻 Autor
+
+**Javier Manzano Oliveros**
+
+Proyecto Intermodular — 2º DAW  
+Profesor: **Ricardo Ruiz Anaya**
+
+---

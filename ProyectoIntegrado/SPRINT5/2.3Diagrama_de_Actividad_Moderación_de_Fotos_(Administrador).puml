@@ -1,0 +1,35 @@
+@startuml
+!theme plain
+
+title "Actividad: Moderación y Eliminación de Fotos (Administrador)"
+
+start
+
+:Administrador accede al panel de moderación;
+:Mostrar fotos pendientes de revisión;
+
+:Seleccionar foto a revisar;
+:Comprobar reportes / contenido;
+
+if (¿Contenido apropiado?) then (Sí)
+    :Aprobar foto;
+    :Marcar foto como moderada en BD;
+    :Notificar usuario mediante notificación interna;
+else (No)
+    :Decidir acción;
+    if (¿Eliminar foto?) then (Eliminar)
+        :Eliminar imagen de Cloudinary;
+        :Eliminar foto de BD;
+        :Guardar registro de moderación;
+        :Notificar al usuario que la foto fue eliminada;
+    else (Advertir)
+        :Marcar foto como advertida / pendiente;
+        :Enviar notificación de advertencia al usuario;
+    endif
+endif
+
+:Volver a lista de fotos pendientes;
+
+stop
+@enduml
+

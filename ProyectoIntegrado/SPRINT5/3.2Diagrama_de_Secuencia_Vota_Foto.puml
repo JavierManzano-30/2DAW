@@ -1,0 +1,27 @@
+@startuml
+title Secuencia: Votar Foto
+
+actor Usuario
+participant FrontEnd
+participant BackEnd
+database BD
+
+Usuario -> FrontEnd : Pulsar boton Votar
+FrontEnd -> BackEnd : POST /photos/{id}/vote (JWT)
+
+BackEnd -> BackEnd : Validar autenticacion
+BackEnd -> BD : SELECT voto EXISTS (user_id, photo_id)
+BD --> BackEnd : resultado
+
+alt Usuario ya voto
+    BackEnd --> FrontEnd : 409 Ya has votado
+    FrontEnd --> Usuario : Mostrar error
+else Voto permitido
+    BackEnd -> BD : INSERT voto (photo_id, user_id)
+    BD --> BackEnd : OK
+    BackEnd --> FrontEnd : 201 Voto registrado
+    FrontEnd --> Usuario : Confirmacion
+end
+
+@enduml
+

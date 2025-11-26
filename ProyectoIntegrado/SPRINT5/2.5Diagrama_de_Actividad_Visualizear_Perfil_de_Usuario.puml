@@ -1,0 +1,27 @@
+@startuml
+!theme plain
+
+title "Actividad: Visualizar Perfil de Usuario"
+
+start
+
+:Usuario accede al Perfil;
+
+:Validar autenticación;
+if (¿Usuario logueado?) then (Sí)
+
+    :Obtener datos del usuario;
+    :Obtener fotos publicadas;
+    :Obtener votos realizados;
+
+    :Mostrar estadísticas y actividad;
+    :Permitir edición de información;
+    :Permitir eliminar foto (si aún está en tiempo permitido);
+
+else (No)
+    :Redireccionar al login;
+endif
+
+stop
+@enduml
+

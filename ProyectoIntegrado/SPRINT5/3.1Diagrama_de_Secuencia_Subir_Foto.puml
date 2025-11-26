@@ -1,0 +1,28 @@
+@startuml
+!theme plain
+
+title "Secuencia: Subir Foto"
+
+actor Usuario
+participant FrontEnd
+participant BackEnd
+database BD
+participant Cloudinary
+
+Usuario -> FrontEnd : Seleccionar foto y enviar formulario
+FrontEnd -> BackEnd : POST /photos (multipart)\n{imagen + metadata}
+
+BackEnd -> BackEnd : Validar autenticación
+BackEnd -> BackEnd : Validar una foto por tema
+
+BackEnd -> Cloudinary : Subir imagen\n(FOTO)
+Cloudinary --> BackEnd : URL Imagen
+
+BackEnd -> BD : INSERT Foto (URL + metadata)
+BD --> BackEnd : OK
+
+BackEnd --> FrontEnd : 201 Created\n{URL + info}
+FrontEnd --> Usuario : Mostrar confirmación
+
+@enduml
+

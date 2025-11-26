@@ -1,0 +1,21 @@
+@startuml
+!theme plain
+
+title "Secuencia: Ver Ganadores por Semana"
+
+actor Usuario
+participant FrontEnd
+participant BackEnd
+database BD
+
+Usuario -> FrontEnd : Ver ganadores
+FrontEnd -> BackEnd : GET /winners?week={x}
+
+BackEnd -> BD : SELECT ganadores\nJOIN fotos, usuarios, communities
+BD --> BackEnd : Lista de ganadores
+
+BackEnd --> FrontEnd : 200 OK\nJSON {ganadores: [...]}
+FrontEnd --> Usuario : Mostrar resultados
+
+@enduml
+

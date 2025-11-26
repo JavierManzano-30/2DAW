@@ -1,0 +1,69 @@
+@startuml
+!theme plain
+
+' ==== Actores ====
+actor "Visitante" as Visitor
+actor "Usuario Registrado" as User
+actor "Administrador" as Admin
+actor "Cloudinary" as Cloud
+
+' ==== Casos de Uso ====
+usecase "Registrar Usuario" as UC_Register
+usecase "Iniciar Sesión" as UC_Login
+
+usecase "Ver Galería" as UC_ViewGallery
+usecase "Ver Detalle de Foto" as UC_ViewPhoto
+usecase "Subir Foto" as UC_Upload
+usecase "Votar Foto" as UC_Vote
+usecase "Eliminar mi Foto" as UC_DeleteOwnPhoto
+usecase "Ver Perfil" as UC_Profile
+usecase "Editar Perfil" as UC_EditProfile
+
+usecase "Ver Temas Semanales" as UC_ViewThemes
+usecase "Crear Tema Semanal" as UC_CreateTheme
+usecase "Moderación de Fotos" as UC_Moderation
+usecase "Eliminar Foto (Admin)" as UC_DeletePhoto
+
+usecase "Ver Ganadores" as UC_ViewWinners
+usecase "Calcular Ganadores" as UC_CalcWinners
+
+' ==== Inclusiones y Extensiones ====
+usecase "Guardar Imagen en Cloudinary" as UC_SaveCloud
+usecase "Validar Usuario Autenticado" as UC_ValidateUser
+usecase "Finalizar Semana" as UC_EndWeek
+usecase "Validar Propiedad y Tiempo" as UC_ValidateOwnTime
+
+UC_Upload --> UC_SaveCloud : <<include>>
+UC_Vote --> UC_ValidateUser : <<include>>
+UC_DeleteOwnPhoto --> UC_ValidateUser : <<include>>
+UC_DeleteOwnPhoto --> UC_ValidateOwnTime : <<include>>
+UC_Moderation --> UC_DeletePhoto : <<include>>
+UC_CalcWinners --> UC_EndWeek : <<extend>>
+
+' ==== Asociación Actores - Casos ====
+Visitor --> UC_ViewGallery
+Visitor --> UC_ViewPhoto
+Visitor --> UC_ViewThemes
+Visitor --> UC_ViewWinners
+Visitor --> UC_Register
+Visitor --> UC_Login
+
+User --> UC_ViewGallery
+User --> UC_ViewPhoto
+User --> UC_Upload
+User --> UC_Vote
+User --> UC_DeleteOwnPhoto
+User --> UC_Profile
+User --> UC_EditProfile
+User --> UC_ViewThemes
+User --> UC_ViewWinners
+
+Admin --> UC_CreateTheme
+Admin --> UC_Moderation
+Admin --> UC_DeletePhoto
+Admin --> UC_CalcWinners
+
+UC_SaveCloud --> Cloud
+
+@enduml
+
