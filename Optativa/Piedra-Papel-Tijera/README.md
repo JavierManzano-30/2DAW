@@ -63,6 +63,49 @@ El script detecta si la entrada estándar está conectada a un pipe; si recibe J
 
 Con `finish:true`, la respuesta es un análisis en texto plano (ignora el JSON de salida).
 
+## Modo web con botones (nuevo)
+Hemos añadido un servidor HTTP sencillo en `index.js` que reutiliza la IA de predicción.
+
+1. Pon tu API key en `.env.local` (`OPENAI_API_KEY=...`).
+2. Arranca el servidor web:
+   ```bash
+   node index.js --web   # por defecto en puerto 3000; cambia con PORT=4000 node index.js --web
+   ```
+3. Abre en el navegador:
+   - `http://localhost:3000/rps.html` para jugar con botones (piedra/papel/tijeras), ver marcador, historial y resumen final (botón “Terminar partida”).
+   - `http://localhost:3000/` sigue siendo la demo de chat contra el endpoint /api/chat.
+
+### API de juego (para integraciones)
+`POST /api/rps` con JSON:
+```json
+{
+  "playerMove": "piedra",  // opcional si finish:true
+  "finish": false,
+  "state": {
+    "score": { "player": 0, "machine": 0 },
+    "history": { "player": [], "machine": [] }
+  }
+}
+```
+Respuesta normal:
+```json
+{
+  "machineMove": "papel",
+  "winner": "machine",
+  "predictedPlayerMove": "piedra",
+  "predictability": 66.7,
+  "state": { "score": { "player": 0, "machine": 1 }, "history": { "player": ["piedra"], "machine": ["papel"] } }
+}
+```
+Con `finish:true`, responde:
+```json
+{
+  "summary": "Jugada más usada: ... Previsibilidad estimada: 42.8%.",
+  "predictability": 42.8,
+  "state": { ...último estado... }
+}
+```
+
 ## Lógica de predicción (resumen)
 - Modelo de Markov de orden 1: mira la transición más frecuente desde tu último movimiento; si no hay suficiente historial, usa el movimiento más frecuente global; si no, cae a `piedra`.
 - Porcentaje de previsibilidad: re-simula el predictor sobre tu historial y calcula aciertos.
