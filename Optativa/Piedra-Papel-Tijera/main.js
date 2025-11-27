@@ -239,3 +239,13 @@ if (require.main === module) {
     jsonMain();
   }
 }
+
+module.exports = {
+  MOVES,
+  predictPlayerNext,
+  computePredictability,
+  counterMove,
+  processTurn,
+  decideWinner,
+  summarizePattern,
+};

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piedra, Papel o Tijeras · Web</title>
+    <style>
+      :root {
+        --bg: #0f1624;
+        --panel: rgba(255, 255, 255, 0.08);
+        --card: #111a2c;
+        --accent: #63ffd8;
+        --text: #e6edf7;
+        --muted: #9fb1cc;
+        --lose: #ff708d;
+        --win: #8cf08a;
+        --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+        background: radial-gradient(circle at 10% 20%, #1b2a4a 0%, #0f1624 45%, #0b1120 100%);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 32px 16px;
+      }
+      .shell {
+        width: min(960px, 100%);
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: 0.5px;
+      }
+      .tag {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+      .card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 10px 0 6px;
+      }
+      .btn {
+        flex: 1 1 120px;
+        background: linear-gradient(120deg, #63ffd8, #45a3ff);
+        color: #0c1322;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: transform 0.1s ease, box-shadow 0.15s ease;
+        box-shadow: 0 10px 30px rgba(69, 163, 255, 0.35);
+      }
+      .btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 6px 20px rgba(69, 163, 255, 0.25);
+      }
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        box-shadow: none;
+      }
+      .status {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .score {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .score span {
+        padding: 8px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .bubble {
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: 10px;
+        background: rgba(99, 255, 216, 0.08);
+        border: 1px solid rgba(99, 255, 216, 0.2);
+        line-height: 1.5;
+      }
+      .history {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 8px;
+        max-height: 320px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+      .history li {
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .pill {
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.3px;
+      }
+      .pill.win {
+        background: rgba(140, 240, 138, 0.16);
+        color: var(--win);
+        border: 1px solid rgba(140, 240, 138, 0.5);
+      }
+      .pill.lose {
+        background: rgba(255, 112, 141, 0.12);
+        color: var(--lose);
+        border: 1px solid rgba(255, 112, 141, 0.4);
+      }
+      .pill.draw {
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .summary {
+        margin-top: 10px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      @media (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <h1>Piedra, Papel o Tijeras</h1>
+        <div class="tag">Modo web · /api/rps</div>
+      </header>
+      <div class="grid">
+        <section class="card">
+          <div class="score">
+            <span>Marcador · Tú: <strong id="score-player">0</strong></span>
+            <span>Máquina: <strong id="score-machine">0</strong></span>
+          </div>
+          <div class="buttons">
+            <button class="btn" data-move="piedra">🪨 Piedra</button>
+            <button class="btn" data-move="papel">📄 Papel</button>
+            <button class="btn" data-move="tijeras">✂️ Tijeras</button>
+            <button class="btn secondary" id="finish">Terminar partida</button>
+          </div>
+          <div class="bubble" id="result">
+            Elige tu jugada para empezar. La máquina analiza tu historial y adapta su movimiento.
+          </div>
+          <div class="status" id="status">Listo.</div>
+        </section>
+        <section class="card">
+          <h3 style="margin:0 0 8px 0;">Historial</h3>
+          <ul class="history" id="history">
+            <li>
+              <span>Aún no hay jugadas.</span>
+              <span class="pill draw">—</span>
+            </li>
+          </ul>
+          <div class="summary" id="summary"></div>
+        </section>
+      </div>
+    </main>
+    <script>
+      const scorePlayerEl = document.getElementById("score-player");
+      const scoreMachineEl = document.getElementById("score-machine");
+      const resultEl = document.getElementById("result");
+      const statusEl = document.getElementById("status");
+      const historyEl = document.getElementById("history");
+      const summaryEl = document.getElementById("summary");
+      const btns = document.querySelectorAll("[data-move]");
+      const finishBtn = document.getElementById("finish");
+
+      let state = { score: { player: 0, machine: 0 }, history: { player: [], machine: [] } };
+      let busy = false;
+
+      const setBusy = (v) => {
+        busy = v;
+        btns.forEach((b) => (b.disabled = v));
+        finishBtn.disabled = v;
+        statusEl.textContent = v ? "Enviando..." : "Listo.";
+      };
+
+      const winnerLabel = (w) => {
+        if (w === "player") return { text: "Ganas", cls: "win" };
+        if (w === "machine") return { text: "Pierdes", cls: "lose" };
+        return { text: "Empate", cls: "draw" };
+      };
+
+      const renderHistory = () => {
+        historyEl.innerHTML = "";
+        if (!state.history.player.length) {
+          historyEl.innerHTML =
+            '<li><span>Aún no hay jugadas.</span><span class="pill draw">—</span></li>';
+          return;
+        }
+        state.history.player.forEach((pMove, idx) => {
+          const mMove = state.history.machine[idx];
+          const w = winnerLabel(decideWinner(pMove, mMove));
+          const li = document.createElement("li");
+          li.innerHTML = `<span>Ronda ${idx + 1}: Tú ${pMove} · Máquina ${mMove}</span><span class="pill ${w.cls}">${w.text}</span>`;
+          historyEl.appendChild(li);
+        });
+      };
+
+      const decideWinner = (playerMove, machineMove) => {
+        if (playerMove === machineMove) return "empate";
+        const wins = { piedra: "tijeras", papel: "piedra", tijeras: "papel" };
+        return wins[playerMove] === machineMove ? "player" : "machine";
+      };
+
+      const play = async (move) => {
+        if (busy) return;
+        setBusy(true);
+        summaryEl.textContent = "";
+        try {
+          const res = await fetch("/api/rps", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ playerMove: move, state }),
+          });
+          const data = await res.json();
+          if (!res.ok || data.error) throw new Error(data.error || "Error");
+          state = data.state;
+          scorePlayerEl.textContent = state.score.player ?? 0;
+          scoreMachineEl.textContent = state.score.machine ?? 0;
+          const w = winnerLabel(data.winner);
+          resultEl.textContent = `Máquina juega: ${data.machineMove} · ${w.text}. Predicción de tu siguiente jugada: ${data.predictedPlayerMove}. Previsibilidad: ${data.predictability}%`;
+          renderHistory();
+        } catch (err) {
+          statusEl.textContent = `Error: ${err.message}`;
+        } finally {
+          setBusy(false);
+        }
+      };
+
+      const finish = async () => {
+        if (busy) return;
+        setBusy(true);
+        try {
+          const res = await fetch("/api/rps", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ finish: true, state }),
+          });
+          const data = await res.json();
+          if (!res.ok || data.error) throw new Error(data.error || "Error");
+          summaryEl.textContent = `Resumen: ${data.summary}`;
+          statusEl.textContent = "Partida finalizada (puedes seguir jugando, el historial continúa).";
+        } catch (err) {
+          statusEl.textContent = `Error: ${err.message}`;
+        } finally {
+          setBusy(false);
+        }
+      };
+
+      btns.forEach((btn) =>
+        btn.addEventListener("click", () => {
+          play(btn.dataset.move);
+        })
+      );
+      finishBtn.addEventListener("click", finish);
+      renderHistory();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat local con OpenAI</title>
+    <style>
+      :root {
+        --bg: #0f1624;
+        --panel: rgba(255, 255, 255, 0.08);
+        --card: #111a2c;
+        --accent: #63ffd8;
+        --text: #e6edf7;
+        --muted: #9fb1cc;
+        --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+        background: radial-gradient(circle at 10% 20%, #1b2a4a 0%, #0f1624 45%, #0b1120 100%);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 32px 16px;
+      }
+      .shell {
+        width: min(960px, 100%);
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: 0.5px;
+      }
+      .tag {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      textarea {
+        width: 100%;
+        margin-top: 8px;
+        background: #0c1322;
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 15px;
+        min-height: 120px;
+        resize: vertical;
+      }
+      textarea:focus {
+        outline: 1px solid var(--accent);
+        box-shadow: 0 0 0 4px rgba(99, 255, 216, 0.12);
+      }
+      button {
+        margin-top: 12px;
+        background: linear-gradient(120deg, #63ffd8, #45a3ff);
+        color: #0c1322;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: transform 0.1s ease, box-shadow 0.15s ease;
+        box-shadow: 0 10px 30px rgba(69, 163, 255, 0.35);
+      }
+      button:active {
+        transform: translateY(1px);
+        box-shadow: 0 6px 20px rgba(69, 163, 255, 0.25);
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .response {
+        margin-top: 16px;
+        min-height: 80px;
+        border-radius: 10px;
+        padding: 14px;
+        background: rgba(99, 255, 216, 0.06);
+        border: 1px solid rgba(99, 255, 216, 0.2);
+        line-height: 1.5;
+      }
+      .status {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      @media (max-width: 640px) {
+        .shell {
+          padding: 18px;
+        }
+        h1 {
+          font-size: 19px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <h1>Chat con OpenAI</h1>
+        <div class="tag">localhost · /api/chat</div>
+      </header>
+      <section class="card">
+        <label for="prompt">Escribe tu mensaje</label>
+        <textarea id="prompt" placeholder="Ej: Resume las reglas de Piedra, Papel o Tijeras..."></textarea>
+        <button id="send">Preguntar al modelo</button>
+        <div class="status" id="status">Listo para enviar.</div>
+        <div class="response" id="response">La respuesta aparecerá aquí.</div>
+      </section>
+    </main>
+    <script>
+      const promptEl = document.getElementById("prompt");
+      const sendBtn = document.getElementById("send");
+      const statusEl = document.getElementById("status");
+      const responseEl = document.getElementById("response");
+
+      const setBusy = (busy) => {
+        sendBtn.disabled = busy;
+        sendBtn.textContent = busy ? "Consultando..." : "Preguntar al modelo";
+      };
+
+      sendBtn.addEventListener("click", async () => {
+        const prompt = promptEl.value.trim();
+        if (!prompt) {
+          statusEl.textContent = "Escribe algo antes de enviar.";
+          return;
+        }
+        setBusy(true);
+        statusEl.textContent = "Enviando tu mensaje al modelo...";
+        responseEl.textContent = "";
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt }),
+          });
+          const data = await res.json();
+          if (!res.ok || data.error) {
+            throw new Error(data.error || "Error al llamar a la API");
+          }
+          responseEl.textContent = data.reply;
+          statusEl.textContent = "Respuesta recibida.";
+        } catch (err) {
+          responseEl.textContent = "";
+          statusEl.textContent = `Error: ${err.message}`;
+        } finally {
+          setBusy(false);
+        }
+      });
+    </script>
+  </body>
+</html>
