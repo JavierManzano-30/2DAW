@@ -1,0 +1,33 @@
+<!-- Views/CharactersPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:OnePieceApp.ViewModels"
+             x:Class="OnePieceApp.Views.CharactersPage"
+             Title="Personajes"
+             BackgroundColor="{StaticResource AnimeBackground}">
+    <ContentPage.BindingContext>
+        <vm:CharactersViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+        <Label Text="Personajes" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource AnimeGold}" HorizontalOptions="Center"/>
+        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource AnimeRed}" Grid.Row="1"/>
+        <CollectionView ItemsSource="{Binding Characters}" Grid.Row="1" SelectionMode="Single" SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="20" Padding="10" Margin="5" HasShadow="True" Background="{StaticResource CardGradient}">
+                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto">
+                            <Image Source="{Binding Image}" HeightRequest="70" WidthRequest="70" Aspect="AspectFill" Grid.RowSpan="2" Margin="0,0,10,0"/>
+                            <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource AnimeRed}" Grid.Column="1"/>
+                            <Label Text="{Binding Crew}" FontSize="14" TextColor="{StaticResource AnimeGold}" Grid.Column="1" Grid.Row="1"/>
+                            <Label Text="{Binding Bounty}" FontSize="14" TextColor="{StaticResource AnimeWhite}" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center"/>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CharactersViewModel}}, Path=GoToDetailCommand}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="{Binding StatusMessage}" TextColor="{StaticResource AnimeRed}" FontSize="16" HorizontalOptions="Center" Grid.Row="2"/>
+    </Grid>
+</ContentPage>

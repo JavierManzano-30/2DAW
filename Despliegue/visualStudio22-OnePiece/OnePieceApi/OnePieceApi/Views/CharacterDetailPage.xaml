@@ -1,0 +1,28 @@
+<!-- Views/CharacterDetailPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:OnePieceApp.ViewModels"
+             x:Class="OnePieceApp.Views.CharacterDetailPage"
+             Title="Detalle"
+             BackgroundColor="{StaticResource AnimeBackground}">
+    <ContentPage.BindingContext>
+        <vm:CharacterDetailViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource AnimeRed}"/>
+            <Image Source="{Binding Character.Image}" HeightRequest="200" Aspect="AspectFill" HorizontalOptions="Center"/>
+            <Label Text="{Binding Character.Name}" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource AnimeRed}" HorizontalOptions="Center"/>
+            <Label Text="{Binding Character.Crew}" FontSize="18" TextColor="{StaticResource AnimeGold}" HorizontalOptions="Center"/>
+            <Label Text="Recompensa:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
+            <Label Text="{Binding Character.Bounty}" FontSize="20" TextColor="{StaticResource AnimeGold}" FontAttributes="Bold"/>
+            <Label Text="Edad:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
+            <Label Text="{Binding Character.Age}" FontSize="18" TextColor="{StaticResource AnimeWhite}"/>
+            <Label Text="Fruta:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
+            <Label Text="{Binding Character.Fruit}" FontSize="18" TextColor="{StaticResource AnimeWhite}"/>
+            <Label Text="Descripción:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
+            <Label Text="{Binding Character.Description}" FontSize="16" TextColor="{StaticResource AnimeWhite}" />
+            <Button Text="Volver" Clicked="OnBackClicked" Style="{StaticResource AnimeButton}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
