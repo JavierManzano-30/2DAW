@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OnePieceApi.Services;
+using OnePieceApi.ViewModels;
 using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace OnePieceApi
@@ -44,6 +47,21 @@ namespace OnePieceApi
 
             builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
             builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
+
+            builder.Services.AddHttpClient<OnePieceApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://api-onepiece-final-gdh7anbmfsakb6ew.spaincentral-01.azurewebsites.net/api/");
+            });
+
+            builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddTransient<CharactersViewModel>();
+            builder.Services.AddTransient<CharacterDetailViewModel>();
+            builder.Services.AddTransient<SearchViewModel>();
+
+            builder.Services.AddTransient<Views.MainPage>();
+            builder.Services.AddTransient<Views.CharactersPage>();
+            builder.Services.AddTransient<Views.CharacterDetailPage>();
+            builder.Services.AddTransient<Views.SearchPage>();
 
             return builder.Build();
         }

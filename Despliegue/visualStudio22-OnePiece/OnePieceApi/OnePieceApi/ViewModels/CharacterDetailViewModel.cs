@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using OnePieceApi.Models;
+using OnePieceApi.Services;
 
-// ViewModels/CharacterDetailViewModel.cs
-using CommunityToolkit.Mvvm.ComponentModel;
-using OnePieceApp.Models;
-using OnePieceApp.Services;
-
-namespace OnePieceApp.ViewModels;
+namespace OnePieceApi.ViewModels;
 
 [QueryProperty(nameof(Id), "id")]
 public partial class CharacterDetailViewModel : ObservableObject
@@ -20,7 +13,7 @@ public partial class CharacterDetailViewModel : ObservableObject
     int id;
 
     [ObservableProperty]
-    Character character;
+    Character character = new();
 
     [ObservableProperty]
     bool isLoading;

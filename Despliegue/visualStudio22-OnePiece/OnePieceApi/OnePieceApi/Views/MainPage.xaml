@@ -1,18 +1,25 @@
-<!-- Views/MainPage.xaml -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:OnePieceApp.ViewModels"
-             x:Class="OnePieceApp.Views.MainPage"
-             Title="One Piece Universe"
-             BackgroundColor="{StaticResource AnimeBackground}">
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
-    <VerticalStackLayout Padding="30" Spacing="30" VerticalOptions="Center">
-        <Image Source="onepiece_logo.png" HeightRequest="120" HorizontalOptions="Center"/>
-        <Label Text="One Piece Universe" FontSize="36" FontAttributes="Bold" TextColor="{StaticResource AnimeRed}" HorizontalOptions="Center"/>
-        <Button Text="Personajes" Style="{StaticResource AnimeButton}" Command="{Binding GoToCharactersCommand}" />
-        <Button Text="Tripulaciones" Style="{StaticResource AnimeButton}" Command="{Binding GoToCrewsCommand}" />
-        <Button Text="Buscar" Style="{StaticResource AnimeButton}" Command="{Binding GoToSearchCommand}" />
-    </VerticalStackLayout>
+             xmlns:vm="clr-namespace:OnePieceApi.ViewModels"
+             x:Class="OnePieceApi.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="One Piece">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Label Text="One Piece Explorer"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}" />
+            <Label Text="Consulta tu API desplegada en Azure para ver personajes y detalles."
+                   FontSize="16"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
+
+            <Button Text="Personajes"
+                    Command="{Binding GoToCharactersCommand}" />
+            <Button Text="Buscar personajes"
+                    Command="{Binding GoToSearchCommand}" />
+            <Button Text="Tripulaciones"
+                    Command="{Binding GoToCrewsCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-// Models/Character.cs
-namespace OnePieceApp.Models;
+﻿namespace OnePieceApi.Models;
 
 public class Character
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Image { get; set; }
-    public string Bounty { get; set; }
-    public string Crew { get; set; }
-    public string Age { get; set; }
-    public string Fruit { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Image { get; set; } = string.Empty;
+    public string Bounty { get; set; } = string.Empty;
+    public string Crew { get; set; } = string.Empty;
+    public string Age { get; set; } = string.Empty;
+    public string Fruit { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 }

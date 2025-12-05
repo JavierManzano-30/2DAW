@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-// ViewModels/SearchViewModel.cs
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using OnePieceApp.Models;
-using OnePieceApp.Services;
+using OnePieceApi.Models;
+using OnePieceApi.Services;
 using System.Collections.ObjectModel;
 
-namespace OnePieceApp.ViewModels;
+namespace OnePieceApi.ViewModels;
 
 public partial class SearchViewModel : ObservableObject
 {
     private readonly OnePieceApiService _apiService;
 
     [ObservableProperty]
-    string searchTerm;
+    string searchTerm = string.Empty;
 
     [ObservableProperty]
     ObservableCollection<Character> results = new();
@@ -27,7 +20,7 @@ public partial class SearchViewModel : ObservableObject
     bool isLoading;
 
     [ObservableProperty]
-    string statusMessage;
+    string statusMessage = string.Empty;
 
     public SearchViewModel(OnePieceApiService apiService)
     {
@@ -69,6 +62,6 @@ public partial class SearchViewModel : ObservableObject
     async Task GoToDetail(Character character)
     {
         if (character == null) return;
-        await Shell.Current.GoToAsync($"detail?id={character.Id}");
+        await Shell.Current.GoToAsync("detail", new Dictionary<string, object> { { "id", character.Id } });
     }
 }

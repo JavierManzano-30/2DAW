@@ -1,51 +1,24 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using Font = Microsoft.Maui.Font;
+﻿using OnePieceApi.Views;
 
-namespace OnePieceApi
+namespace OnePieceApi;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-            var currentTheme = Application.Current!.RequestedTheme;
-            ThemeSegmentedControl.SelectedIndex = currentTheme == AppTheme.Light ? 0 : 1;
-        }
-        public static async Task DisplaySnackbarAsync(string message)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        InitializeComponent();
+        Routing.RegisterRoute("detail", typeof(CharacterDetailPage));
+    }
 
-            var snackbarOptions = new SnackbarOptions
-            {
-                BackgroundColor = Color.FromArgb("#FF3300"),
-                TextColor = Colors.White,
-                ActionButtonTextColor = Colors.Yellow,
-                CornerRadius = new CornerRadius(0),
-                Font = Font.SystemFontOfSize(18),
-                ActionButtonFont = Font.SystemFontOfSize(14)
-            };
+    public static async Task DisplayToastAsync(string message)
+    {
+        // Fallback toast helper for the older page models
+        var page = Application.Current?.Windows.FirstOrDefault()?.Page 
+#pragma warning disable CS0618 // MainPage obsoleto: solo lo usamos como último recurso
+                   ?? Application.Current?.MainPage;
+#pragma warning restore CS0618
+        if (page == null) return;
 
-            var snackbar = Snackbar.Make(message, visualOptions: snackbarOptions);
-
-            await snackbar.Show(cancellationTokenSource.Token);
-        }
-
-        public static async Task DisplayToastAsync(string message)
-        {
-            // Toast is currently not working in MCT on Windows
-            if (OperatingSystem.IsWindows())
-                return;
-
-            var toast = Toast.Make(message, textSize: 18);
-
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await toast.Show(cts.Token);
-        }
-
-        private void SfSegmentedControl_SelectionChanged(object sender, Syncfusion.Maui.Toolkit.SegmentedControl.SelectionChangedEventArgs e)
-        {
-            Application.Current!.UserAppTheme = e.NewIndex == 0 ? AppTheme.Light : AppTheme.Dark;
-        }
+        await page.DisplayAlert("Info", message, "OK");
     }
 }

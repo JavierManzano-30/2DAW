@@ -1,28 +1,25 @@
 <!-- Views/CharacterDetailPage.xaml -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:OnePieceApp.ViewModels"
-             x:Class="OnePieceApp.Views.CharacterDetailPage"
-             Title="Detalle"
-             BackgroundColor="{StaticResource AnimeBackground}">
-    <ContentPage.BindingContext>
-        <vm:CharacterDetailViewModel />
-    </ContentPage.BindingContext>
+             xmlns:vm="clr-namespace:OnePieceApi.ViewModels"
+             x:Class="OnePieceApi.Views.CharacterDetailPage"
+             x:DataType="vm:CharacterDetailViewModel"
+             Title="Detalle">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
-            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource AnimeRed}"/>
+            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource Primary}"/>
             <Image Source="{Binding Character.Image}" HeightRequest="200" Aspect="AspectFill" HorizontalOptions="Center"/>
-            <Label Text="{Binding Character.Name}" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource AnimeRed}" HorizontalOptions="Center"/>
-            <Label Text="{Binding Character.Crew}" FontSize="18" TextColor="{StaticResource AnimeGold}" HorizontalOptions="Center"/>
-            <Label Text="Recompensa:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
-            <Label Text="{Binding Character.Bounty}" FontSize="20" TextColor="{StaticResource AnimeGold}" FontAttributes="Bold"/>
-            <Label Text="Edad:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
-            <Label Text="{Binding Character.Age}" FontSize="18" TextColor="{StaticResource AnimeWhite}"/>
-            <Label Text="Fruta:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
-            <Label Text="{Binding Character.Fruit}" FontSize="18" TextColor="{StaticResource AnimeWhite}"/>
-            <Label Text="Descripción:" FontSize="16" TextColor="{StaticResource AnimeWhite}"/>
-            <Label Text="{Binding Character.Description}" FontSize="16" TextColor="{StaticResource AnimeWhite}" />
-            <Button Text="Volver" Clicked="OnBackClicked" Style="{StaticResource AnimeButton}" />
+            <Label Text="{Binding Character.Name}" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center"/>
+            <Label Text="{Binding Character.Crew}" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" HorizontalOptions="Center"/>
+            <Label Text="Recompensa:" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
+            <Label Text="{Binding Character.Bounty}" FontSize="20" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
+            <Label Text="Edad:" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
+            <Label Text="{Binding Character.Age}" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+            <Label Text="Fruta:" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
+            <Label Text="{Binding Character.Fruit}" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+            <Label Text="DescripciÃ³n:" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
+            <Label Text="{Binding Character.Description}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
+            <Button Text="Volver" Clicked="OnBackClicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

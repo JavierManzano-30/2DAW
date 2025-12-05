@@ -1,18 +1,55 @@
-<!-- Views/MainPage.xaml -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:OnePieceApp.ViewModels"
-             x:Class="OnePieceApp.Views.MainPage"
-             Title="One Piece Universe"
-             BackgroundColor="{StaticResource AnimeBackground}">
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
-    <VerticalStackLayout Padding="30" Spacing="30" VerticalOptions="Center">
-        <Image Source="onepiece_logo.png" HeightRequest="120" HorizontalOptions="Center"/>
-        <Label Text="One Piece Universe" FontSize="36" FontAttributes="Bold" TextColor="{StaticResource AnimeRed}" HorizontalOptions="Center"/>
-        <Button Text="Personajes" Style="{StaticResource AnimeButton}" Command="{Binding GoToCharactersCommand}" />
-        <Button Text="Tripulaciones" Style="{StaticResource AnimeButton}" Command="{Binding GoToCrewsCommand}" />
-        <Button Text="Buscar" Style="{StaticResource AnimeButton}" Command="{Binding GoToSearchCommand}" />
-    </VerticalStackLayout>
+             xmlns:vm="clr-namespace:OnePieceApi.ViewModels"
+             xmlns:models="clr-namespace:OnePieceApi.Models"
+             x:Class="OnePieceApi.Views.SearchPage"
+             x:Name="SearchRoot"
+             x:DataType="vm:SearchViewModel"
+             Title="Buscar">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+            <Label Text="Busca un personaje"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Entry Placeholder="Introduce un nombre"
+                       Text="{Binding SearchTerm}" />
+                <Button Text="Buscar"
+                        Command="{Binding SearchCommand}"
+                        Grid.Column="1" />
+            </Grid>
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="{StaticResource Primary}" />
+
+            <Label Text="{Binding StatusMessage}"
+                   TextColor="{StaticResource Primary}" />
+
+            <CollectionView ItemsSource="{Binding Results}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Character">
+                        <Frame Padding="12"
+                               CornerRadius="12"
+                               Margin="0,4"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
+                            <Grid ColumnDefinitions="80,*" ColumnSpacing="10">
+                                <Image Source="{Binding Image}" HeightRequest="70" WidthRequest="70" Aspect="AspectFill" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                    <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding Crew}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding BindingContext.GoToDetailCommand, Source={x:Reference Name=SearchRoot}}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
