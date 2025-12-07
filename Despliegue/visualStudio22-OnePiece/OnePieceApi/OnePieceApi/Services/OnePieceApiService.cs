@@ -56,6 +56,40 @@ public class OnePieceApiService
         return null;
     }
 
+    public async Task<List<Crew>> GetCrews()
+    {
+        var root = await FetchJson("tripulaciones");
+        if (root == null)
+            throw new InvalidOperationException("La API no devolvió tripulaciones.");
+
+        var list = ExtractArray(root.Value)
+            .Select(MapCrew)
+            .ToList();
+
+        if (list.Count == 0)
+            throw new InvalidOperationException("No se encontraron tripulaciones en la respuesta de la API.");
+
+        return list;
+    }
+
+    public async Task<Crew?> GetCrewById(int id)
+    {
+        var root = await FetchJson($"tripulacion/{id}");
+        if (root == null)
+            return null;
+
+        if (root.Value.ValueKind == JsonValueKind.Object)
+            return MapCrew(root.Value);
+
+        if (root.Value.ValueKind == JsonValueKind.Array)
+        {
+            var first = root.Value.EnumerateArray().FirstOrDefault();
+            return first.ValueKind != JsonValueKind.Undefined ? MapCrew(first) : null;
+        }
+
+        return null;
+    }
+
     public async Task<List<Character>> SearchCharacters(string term)
     {
         var characters = await GetAllCharacters();
@@ -138,5 +172,19 @@ public class OnePieceApiService
         }
 
         return 0;
+    }
+
+    private static Crew MapCrew(JsonElement element)
+    {
+        return new Crew
+        {
+            Id = ReadInt(element, "id"),
+            Name = ReadString(element, "name", "crew"),
+            Captain = ReadString(element, "captain", "leader"),
+            Ship = ReadString(element, "ship", "boat", "vessel"),
+            Bounty = ReadString(element, "bounty", "total_bounty"),
+            Image = ReadString(element, "image", "img"),
+            Description = ReadString(element, "description", "about", "resume")
+        };
     }
 }

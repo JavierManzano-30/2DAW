@@ -1,0 +1,48 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:OnePieceApi.ViewModels"
+             xmlns:models="clr-namespace:OnePieceApi.Models"
+             x:Class="OnePieceApi.Views.CrewsPage"
+             x:Name="CrewsRoot"
+             x:DataType="vm:CrewsViewModel"
+             Title="Tripulaciones">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16">
+        <Label Text="Tripulaciones"
+               FontSize="28"
+               FontAttributes="Bold"
+               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+               HorizontalOptions="Center" />
+        <ActivityIndicator IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="{StaticResource Primary}"
+                           Grid.Row="1"/>
+        <CollectionView ItemsSource="{Binding Crews}" Grid.Row="1" SelectionMode="Single" SelectedItem="{Binding SelectedCrew, Mode=TwoWay}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Crew">
+                    <Frame CornerRadius="14"
+                           Padding="12"
+                           Margin="5"
+                           HasShadow="True"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
+                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto">
+                            <Image Source="{Binding Image}" HeightRequest="70" WidthRequest="70" Aspect="AspectFill" Grid.RowSpan="2" Margin="0,0,10,0"/>
+                            <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Primary}" Grid.Column="1"/>
+                            <Label Text="{Binding Captain}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" Grid.Column="1" Grid.Row="1"/>
+                            <Label Text="{Binding Bounty}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center"/>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding BindingContext.GoToDetailCommand, Source={x:Reference Name=CrewsRoot}}"
+                                CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="{Binding StatusMessage}"
+               TextColor="{StaticResource Primary}"
+               FontSize="16"
+               HorizontalOptions="Center"
+               Grid.Row="2"/>
+    </Grid>
+</ContentPage>

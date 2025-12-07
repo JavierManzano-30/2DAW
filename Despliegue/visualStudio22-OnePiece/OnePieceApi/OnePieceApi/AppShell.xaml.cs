@@ -8,6 +8,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         Routing.RegisterRoute("detail", typeof(CharacterDetailPage));
+        Routing.RegisterRoute("crewdetail", typeof(CrewDetailPage));
     }
 
     public static async Task DisplayToastAsync(string message)

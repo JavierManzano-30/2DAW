@@ -50,17 +50,21 @@ namespace OnePieceApi
 
             builder.Services.AddHttpClient<OnePieceApiService>(client =>
             {
-                client.BaseAddress = new Uri("https://api-onepiece-final-gdh7anbmfsakb6ew.spaincentral-01.azurewebsites.net/api/");
+                client.BaseAddress = new Uri("https://api2-onepiece2-bne8abdbcgbqfugj.spaincentral-01.azurewebsites.net/api/");
             });
 
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddTransient<CharactersViewModel>();
             builder.Services.AddTransient<CharacterDetailViewModel>();
+            builder.Services.AddTransient<CrewsViewModel>();
+            builder.Services.AddTransient<CrewDetailViewModel>();
             builder.Services.AddTransient<SearchViewModel>();
 
             builder.Services.AddTransient<Views.MainPage>();
             builder.Services.AddTransient<Views.CharactersPage>();
             builder.Services.AddTransient<Views.CharacterDetailPage>();
+            builder.Services.AddTransient<Views.CrewsPage>();
+            builder.Services.AddTransient<Views.CrewDetailPage>();
             builder.Services.AddTransient<Views.SearchPage>();
 
             return builder.Build();

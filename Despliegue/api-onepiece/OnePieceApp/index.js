@@ -32,6 +32,30 @@ app.get("/api/personaje/:id", async (req, res) => {
     }
 });
 
+// Lista de tripulaciones
+app.get("/api/tripulaciones", async (_req, res) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/v2/crews/en`);
+        res.json(response.data);
+    } catch (err) {
+        console.error("Error en tripulaciones:", err.message);
+        res.status(500).json({ error: "Error consultando tripulaciones" });
+    }
+});
+
+// Tripulación por ID
+app.get("/api/tripulacion/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const response = await axios.get(`${BASE_URL}/v2/crews/en/${id}`);
+        res.json(response.data);
+    } catch (err) {
+        console.error("Error en tripulación:", err.message);
+        res.status(500).json({ error: "Tripulación no encontrada" });
+    }
+});
+
 // Frutas del diablo
 app.get("/api/frutas", async (req, res) => {
     try {

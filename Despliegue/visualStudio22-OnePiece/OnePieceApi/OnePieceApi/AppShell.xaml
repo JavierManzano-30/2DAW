@@ -5,6 +5,7 @@
     <TabBar>
         <ShellContent Route="main" Title="Inicio" ContentTemplate="{DataTemplate views:MainPage}" />
         <ShellContent Route="characters" Title="Personajes" ContentTemplate="{DataTemplate views:CharactersPage}" />
+        <ShellContent Route="crews" Title="Tripulaciones" ContentTemplate="{DataTemplate views:CrewsPage}" />
         <ShellContent Route="search" Title="Buscar" ContentTemplate="{DataTemplate views:SearchPage}" />
     </TabBar>
 </Shell>

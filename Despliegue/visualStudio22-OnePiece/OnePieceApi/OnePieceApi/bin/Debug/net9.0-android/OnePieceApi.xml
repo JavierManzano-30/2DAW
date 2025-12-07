@@ -616,6 +616,52 @@
         <member name="P:OnePieceApi.ViewModels.CharactersViewModel.GoToDetailCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CharactersViewModel.GoToDetail(OnePieceApi.Models.Character)"/>.</summary>
         </member>
+        <member name="T:OnePieceApi.ViewModels.CrewDetailViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.id"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.Crew">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.crew"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.isLoading"/>
+        </member>
+        <member name="M:OnePieceApi.ViewModels.CrewDetailViewModel.OnIdChanged(System.Int32)">
+            <summary>Executes the logic for when <see cref="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id"/> is changed.</remarks>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.CrewsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.Crews">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.crews"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.isLoading"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.StatusMessage">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.statusMessage"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.SelectedCrew">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.selectedCrew"/>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.CrewsViewModel.loadCrewsCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.CrewsViewModel.LoadCrewsCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.LoadCrewsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CrewsViewModel.LoadCrews"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.CrewsViewModel.goToDetailCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.CrewsViewModel.GoToDetailCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.GoToDetailCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CrewsViewModel.GoToDetail(OnePieceApi.Models.Crew)"/>.</summary>
+        </member>
         <member name="T:OnePieceApi.ViewModels.MainViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -955,6 +1001,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedCharacter">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedCharacter" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Crew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Crew" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Crews">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Crews" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedCrew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedCrew" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SearchTerm">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SearchTerm" generated properties.</summary>
         </member>
@@ -1047,6 +1102,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedCharacter">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedCharacter" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Crew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Crew" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Crews">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Crews" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedCrew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedCrew" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SearchTerm">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SearchTerm" generated properties.</summary>
