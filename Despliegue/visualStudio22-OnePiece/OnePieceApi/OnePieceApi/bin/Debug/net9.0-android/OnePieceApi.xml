@@ -628,6 +628,9 @@
         <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.IsLoading">
             <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.isLoading"/>
         </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.Characters">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.characters"/>
+        </member>
         <member name="M:OnePieceApi.ViewModels.CrewDetailViewModel.OnIdChanged(System.Int32)">
             <summary>Executes the logic for when <see cref="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id"/> just changed.</summary>
             <param name="value">The new property value that was set.</param>

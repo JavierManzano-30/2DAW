@@ -6,29 +6,54 @@
              x:Name="CharactersRoot"
              x:DataType="vm:CharactersViewModel"
              Title="Personajes">
-    <Grid RowDefinitions="Auto,*,Auto" Padding="16">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16" RowSpacing="12">
         <Label Text="Personajes"
                FontSize="28"
                FontAttributes="Bold"
                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
                HorizontalOptions="Center" />
+        <Label Text="Toca una carta para ver el detalle"
+               FontSize="14"
+               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+               HorizontalOptions="Center"
+               Grid.Row="1"/>
         <ActivityIndicator IsRunning="{Binding IsLoading}"
                            IsVisible="{Binding IsLoading}"
                            Color="{StaticResource Primary}"
-                           Grid.Row="1"/>
-        <CollectionView ItemsSource="{Binding Characters}" Grid.Row="1" SelectionMode="Single" SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}">
+                           Grid.Row="2"/>
+        <CollectionView ItemsSource="{Binding Characters}"
+                        Grid.Row="2"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
+                        ItemsLayout="VerticalList">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Character">
-                    <Frame CornerRadius="14"
-                           Padding="12"
-                           Margin="5"
+                    <Frame CornerRadius="18"
+                           Padding="0"
+                           Margin="6,8"
                            HasShadow="True"
                            BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
-                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto">
-                            <Image Source="{Binding Image}" HeightRequest="70" WidthRequest="70" Aspect="AspectFill" Grid.RowSpan="2" Margin="0,0,10,0"/>
-                            <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Primary}" Grid.Column="1"/>
-                            <Label Text="{Binding Crew}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" Grid.Column="1" Grid.Row="1"/>
-                            <Label Text="{Binding Bounty}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center"/>
+                        <Grid RowDefinitions="140,Auto,Auto" ColumnDefinitions="*">
+                            <Image Source="{Binding Image}"
+                                   HeightRequest="140"
+                                   Aspect="AspectFill"
+                                   Grid.RowSpan="1"
+                                   Grid.ColumnSpan="1"/>
+                            <StackLayout Grid.Row="1" Padding="12,10,12,4" Spacing="4">
+                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                <Label FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Tripulación: " />
+                                            <Span Text="{Binding Crew}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" Padding="12,0,12,12" Spacing="2" Orientation="Horizontal" HorizontalOptions="Start">
+                                <Label Text="Recompensa:" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                                <Label Text="{Binding Bounty}" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                            </StackLayout>
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
@@ -43,6 +68,6 @@
                TextColor="{StaticResource Primary}"
                FontSize="16"
                HorizontalOptions="Center"
-               Grid.Row="2"/>
+               Grid.Row="3"/>
     </Grid>
 </ContentPage>

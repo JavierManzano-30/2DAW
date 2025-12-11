@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:OnePieceApi.ViewModels"
+             xmlns:models="clr-namespace:OnePieceApi.Models"
              x:Class="OnePieceApi.Views.CrewDetailPage"
              x:DataType="vm:CrewDetailViewModel"
              Title="Tripulación">
@@ -18,6 +19,23 @@
             <Label Text="Descripción" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
             <Label Text="{Binding Crew.Description}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
             <Button Text="Volver" Clicked="OnBackClicked" />
+
+            <Label Text="Personajes de esta tripulación"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" />
+            <CollectionView ItemsSource="{Binding Characters}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Character">
+                        <Frame CornerRadius="12" Padding="10" Margin="0,6" HasShadow="True" BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                <Label Text="{Binding Bounty}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

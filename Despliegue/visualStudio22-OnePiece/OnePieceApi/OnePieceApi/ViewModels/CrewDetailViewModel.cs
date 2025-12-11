@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using OnePieceApi.Models;
 using OnePieceApi.Services;
+using System.Collections.ObjectModel;
 
 namespace OnePieceApi.ViewModels;
 
@@ -17,6 +18,9 @@ public partial class CrewDetailViewModel : ObservableObject
 
     [ObservableProperty]
     bool isLoading;
+
+    [ObservableProperty]
+    ObservableCollection<Character> characters = new();
 
     public CrewDetailViewModel(OnePieceApiService apiService)
     {
@@ -35,6 +39,9 @@ public partial class CrewDetailViewModel : ObservableObject
             IsLoading = true;
             var data = await _apiService.GetCrewById(Id);
             Crew = data ?? new Crew { Name = "Desconocida" };
+
+            var list = await _apiService.GetCharactersByCrew(Crew.Name);
+            Characters = new ObservableCollection<Character>(list);
         }
         catch
         {

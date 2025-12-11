@@ -1,0 +1,1122 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OnePieceApi</name>
+    </assembly>
+    <members>
+        <member name="T:OnePieceApi.Data.CategoryRepository">
+            <summary>
+            Repository class for managing categories in the database.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.#ctor(Microsoft.Extensions.Logging.ILogger{OnePieceApi.Data.CategoryRepository})">
+            <summary>
+            Initializes a new instance of the <see cref="T:OnePieceApi.Data.CategoryRepository"/> class.
+            </summary>
+            <param name="logger">The logger instance.</param>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.Init">
+            <summary>
+            Initializes the database connection and creates the Category table if it does not exist.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.ListAsync">
+            <summary>
+            Retrieves a list of all categories from the database.
+            </summary>
+            <returns>A list of <see cref="T:OnePieceApi.Models.Category"/> objects.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.GetAsync(System.Int32)">
+            <summary>
+            Retrieves a specific category by its ID.
+            </summary>
+            <param name="id">The ID of the category.</param>
+            <returns>A <see cref="T:OnePieceApi.Models.Category"/> object if found; otherwise, null.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.SaveItemAsync(OnePieceApi.Models.Category)">
+            <summary>
+            Saves a category to the database. If the category ID is 0, a new category is created; otherwise, the existing category is updated.
+            </summary>
+            <param name="item">The category to save.</param>
+            <returns>The ID of the saved category.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.DeleteItemAsync(OnePieceApi.Models.Category)">
+            <summary>
+            Deletes a category from the database.
+            </summary>
+            <param name="item">The category to delete.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.CategoryRepository.DropTableAsync">
+            <summary>
+            Drops the Category table from the database.
+            </summary>
+        </member>
+        <member name="T:OnePieceApi.Data.ProjectRepository">
+            <summary>
+            Repository class for managing projects in the database.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.#ctor(OnePieceApi.Data.TaskRepository,OnePieceApi.Data.TagRepository,Microsoft.Extensions.Logging.ILogger{OnePieceApi.Data.ProjectRepository})">
+            <summary>
+            Initializes a new instance of the <see cref="T:OnePieceApi.Data.ProjectRepository"/> class.
+            </summary>
+            <param name="taskRepository">The task repository instance.</param>
+            <param name="tagRepository">The tag repository instance.</param>
+            <param name="logger">The logger instance.</param>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.Init">
+            <summary>
+            Initializes the database connection and creates the Project table if it does not exist.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.ListAsync">
+            <summary>
+            Retrieves a list of all projects from the database.
+            </summary>
+            <returns>A list of <see cref="T:OnePieceApi.Models.Project"/> objects.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.GetAsync(System.Int32)">
+            <summary>
+            Retrieves a specific project by its ID.
+            </summary>
+            <param name="id">The ID of the project.</param>
+            <returns>A <see cref="T:OnePieceApi.Models.Project"/> object if found; otherwise, null.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.SaveItemAsync(OnePieceApi.Models.Project)">
+            <summary>
+            Saves a project to the database. If the project ID is 0, a new project is created; otherwise, the existing project is updated.
+            </summary>
+            <param name="item">The project to save.</param>
+            <returns>The ID of the saved project.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.DeleteItemAsync(OnePieceApi.Models.Project)">
+            <summary>
+            Deletes a project from the database.
+            </summary>
+            <param name="item">The project to delete.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.ProjectRepository.DropTableAsync">
+            <summary>
+            Drops the Project table from the database.
+            </summary>
+        </member>
+        <member name="T:OnePieceApi.Data.TagRepository">
+            <summary>
+            Repository class for managing tags in the database.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.#ctor(Microsoft.Extensions.Logging.ILogger{OnePieceApi.Data.TagRepository})">
+            <summary>
+            Initializes a new instance of the <see cref="T:OnePieceApi.Data.TagRepository"/> class.
+            </summary>
+            <param name="logger">The logger instance.</param>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.Init">
+            <summary>
+            Initializes the database connection and creates the Tag and ProjectsTags tables if they do not exist.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.ListAsync">
+            <summary>
+            Retrieves a list of all tags from the database.
+            </summary>
+            <returns>A list of <see cref="T:OnePieceApi.Models.Tag"/> objects.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.ListAsync(System.Int32)">
+            <summary>
+            Retrieves a list of tags associated with a specific project.
+            </summary>
+            <param name="projectID">The ID of the project.</param>
+            <returns>A list of <see cref="T:OnePieceApi.Models.Tag"/> objects.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.GetAsync(System.Int32)">
+            <summary>
+            Retrieves a specific tag by its ID.
+            </summary>
+            <param name="id">The ID of the tag.</param>
+            <returns>A <see cref="T:OnePieceApi.Models.Tag"/> object if found; otherwise, null.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.SaveItemAsync(OnePieceApi.Models.Tag)">
+            <summary>
+            Saves a tag to the database. If the tag ID is 0, a new tag is created; otherwise, the existing tag is updated.
+            </summary>
+            <param name="item">The tag to save.</param>
+            <returns>The ID of the saved tag.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.SaveItemAsync(OnePieceApi.Models.Tag,System.Int32)">
+            <summary>
+            Saves a tag to the database and associates it with a specific project.
+            </summary>
+            <param name="item">The tag to save.</param>
+            <param name="projectID">The ID of the project.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.DeleteItemAsync(OnePieceApi.Models.Tag)">
+            <summary>
+            Deletes a tag from the database.
+            </summary>
+            <param name="item">The tag to delete.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.DeleteItemAsync(OnePieceApi.Models.Tag,System.Int32)">
+            <summary>
+            Deletes a tag from a specific project in the database.
+            </summary>
+            <param name="item">The tag to delete.</param>
+            <param name="projectID">The ID of the project.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TagRepository.DropTableAsync">
+            <summary>
+            Drops the Tag and ProjectsTags tables from the database.
+            </summary>
+        </member>
+        <member name="T:OnePieceApi.Data.TaskRepository">
+            <summary>
+            Repository class for managing tasks in the database.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.#ctor(Microsoft.Extensions.Logging.ILogger{OnePieceApi.Data.TaskRepository})">
+            <summary>
+            Initializes a new instance of the <see cref="T:OnePieceApi.Data.TaskRepository"/> class.
+            </summary>
+            <param name="logger">The logger instance.</param>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.Init">
+            <summary>
+            Initializes the database connection and creates the Task table if it does not exist.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.ListAsync">
+            <summary>
+            Retrieves a list of all tasks from the database.
+            </summary>
+            <returns>A list of <see cref="T:OnePieceApi.Models.ProjectTask"/> objects.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.ListAsync(System.Int32)">
+            <summary>
+            Retrieves a list of tasks associated with a specific project.
+            </summary>
+            <param name="projectId">The ID of the project.</param>
+            <returns>A list of <see cref="T:OnePieceApi.Models.ProjectTask"/> objects.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.GetAsync(System.Int32)">
+            <summary>
+            Retrieves a specific task by its ID.
+            </summary>
+            <param name="id">The ID of the task.</param>
+            <returns>A <see cref="T:OnePieceApi.Models.ProjectTask"/> object if found; otherwise, null.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.SaveItemAsync(OnePieceApi.Models.ProjectTask)">
+            <summary>
+            Saves a task to the database. If the task ID is 0, a new task is created; otherwise, the existing task is updated.
+            </summary>
+            <param name="item">The task to save.</param>
+            <returns>The ID of the saved task.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.DeleteItemAsync(OnePieceApi.Models.ProjectTask)">
+            <summary>
+            Deletes a task from the database.
+            </summary>
+            <param name="item">The task to delete.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:OnePieceApi.Data.TaskRepository.DropTableAsync">
+            <summary>
+            Drops the Task table from the database.
+            </summary>
+        </member>
+        <member name="T:OnePieceApi.PageModels.MainPageModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.TodoCategoryData">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._todoCategoryData"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.TodoCategoryColors">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._todoCategoryColors"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.Tasks">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._tasks"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.Projects">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._projects"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.IsBusy">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._isBusy"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.IsRefreshing">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._isRefreshing"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.Today">
+            <inheritdoc cref="F:OnePieceApi.PageModels.MainPageModel._today"/>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.refreshCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.RefreshCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.RefreshCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.Refresh"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.navigatedToCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.NavigatedToCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.NavigatedToCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.NavigatedTo"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.navigatedFromCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.NavigatedFromCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.NavigatedFromCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.NavigatedFrom"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.appearingCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.AppearingCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.AppearingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.Appearing"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.taskCompletedCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.TaskCompletedCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.TaskCompletedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.TaskCompleted(OnePieceApi.Models.ProjectTask)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.addTaskCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.AddTaskCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.AddTaskCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.AddTask"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.navigateToProjectCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.NavigateToProjectCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.NavigateToProjectCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.NavigateToProject(OnePieceApi.Models.Project)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.navigateToTaskCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.NavigateToTaskCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.NavigateToTaskCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.NavigateToTask(OnePieceApi.Models.ProjectTask)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.MainPageModel.cleanTasksCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.MainPageModel.CleanTasksCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.MainPageModel.CleanTasksCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.MainPageModel.CleanTasks"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.PageModels.ManageMetaPageModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.Categories">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ManageMetaPageModel._categories"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.Tags">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ManageMetaPageModel._tags"/>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.appearingCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.AppearingCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.AppearingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.Appearing"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.saveCategoriesCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.SaveCategoriesCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.SaveCategoriesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.SaveCategories"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.deleteCategoryCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.DeleteCategoryCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.DeleteCategoryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.DeleteCategory(OnePieceApi.Models.Category)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.addCategoryCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.AddCategoryCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.AddCategoryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.AddCategory"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.saveTagsCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.SaveTagsCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.SaveTagsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.SaveTags"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.deleteTagCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.DeleteTagCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.DeleteTagCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.DeleteTag(OnePieceApi.Models.Tag)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.addTagCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.AddTagCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.AddTagCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.AddTag"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ManageMetaPageModel.resetCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ManageMetaPageModel.ResetCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ManageMetaPageModel.ResetCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ManageMetaPageModel.Reset"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.PageModels.ProjectDetailPageModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Name">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._name"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Description">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._description"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Tasks">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._tasks"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Categories">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._categories"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Category">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._category"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.CategoryIndex">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._categoryIndex"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.AllTags">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._allTags"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Icon">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._icon"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.IsBusy">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._isBusy"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.Icons">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectDetailPageModel._icons"/>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.taskCompletedCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.TaskCompletedCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.TaskCompletedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.TaskCompleted(OnePieceApi.Models.ProjectTask)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.saveCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.Save"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.addTaskCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.AddTaskCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.AddTaskCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.AddTask"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.deleteCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.Delete"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.navigateToTaskCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.NavigateToTaskCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.NavigateToTaskCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.NavigateToTask(OnePieceApi.Models.ProjectTask)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.toggleTagCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.ToggleTagCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.ToggleTagCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.ToggleTag(OnePieceApi.Models.Tag)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectDetailPageModel.cleanTasksCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectDetailPageModel.CleanTasksCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectDetailPageModel.CleanTasksCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectDetailPageModel.CleanTasks"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.PageModels.ProjectListPageModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectListPageModel.Projects">
+            <inheritdoc cref="F:OnePieceApi.PageModels.ProjectListPageModel._projects"/>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectListPageModel.appearingCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectListPageModel.AppearingCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectListPageModel.AppearingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectListPageModel.Appearing"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectListPageModel.navigateToProjectCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectListPageModel.NavigateToProjectCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectListPageModel.NavigateToProjectCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectListPageModel.NavigateToProject(OnePieceApi.Models.Project)"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.ProjectListPageModel.addProjectCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.ProjectListPageModel.AddProjectCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.ProjectListPageModel.AddProjectCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.ProjectListPageModel.AddProject"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.PageModels.TaskDetailPageModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.Title">
+            <inheritdoc cref="F:OnePieceApi.PageModels.TaskDetailPageModel._title"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.IsCompleted">
+            <inheritdoc cref="F:OnePieceApi.PageModels.TaskDetailPageModel._isCompleted"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.Projects">
+            <inheritdoc cref="F:OnePieceApi.PageModels.TaskDetailPageModel._projects"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.Project">
+            <inheritdoc cref="F:OnePieceApi.PageModels.TaskDetailPageModel._project"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.SelectedProjectIndex">
+            <inheritdoc cref="F:OnePieceApi.PageModels.TaskDetailPageModel._selectedProjectIndex"/>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.IsExistingProject">
+            <inheritdoc cref="F:OnePieceApi.PageModels.TaskDetailPageModel._isExistingProject"/>
+        </member>
+        <member name="F:OnePieceApi.PageModels.TaskDetailPageModel.saveCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.TaskDetailPageModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.TaskDetailPageModel.Save"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.PageModels.TaskDetailPageModel.deleteCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.PageModels.TaskDetailPageModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.PageModels.TaskDetailPageModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.PageModels.TaskDetailPageModel.Delete"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.Services.IErrorHandler">
+            <summary>
+            Error Handler Service.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Services.IErrorHandler.HandleError(System.Exception)">
+            <summary>
+            Handle error in UI.
+            </summary>
+            <param name="ex">Exception being thrown.</param>
+        </member>
+        <member name="T:OnePieceApi.Services.ModalErrorHandler">
+            <summary>
+            Modal Error Handler.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Services.ModalErrorHandler.HandleError(System.Exception)">
+            <summary>
+            Handle error in UI.
+            </summary>
+            <param name="ex">Exception.</param>
+        </member>
+        <member name="T:OnePieceApi.Utilities.ProjectExtensions">
+            <summary>
+            Project Model Extensions
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Utilities.ProjectExtensions.IsNullOrNew(OnePieceApi.Models.Project)">
+            <summary>
+            Check if the project is null or new.
+            </summary>
+            <param name="project"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OnePieceApi.Utilities.TaskUtilities">
+            <summary>
+            Task Utilities.
+            </summary>
+        </member>
+        <member name="M:OnePieceApi.Utilities.TaskUtilities.FireAndForgetSafeAsync(System.Threading.Tasks.Task,OnePieceApi.Services.IErrorHandler)">
+            <summary>
+            Fire and Forget Safe Async.
+            </summary>
+            <param name="task">Task to Fire and Forget.</param>
+            <param name="handler">Error Handler.</param>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.CharacterDetailViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharacterDetailViewModel.Id">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharacterDetailViewModel.id"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharacterDetailViewModel.Character">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharacterDetailViewModel.character"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharacterDetailViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharacterDetailViewModel.isLoading"/>
+        </member>
+        <member name="M:OnePieceApi.ViewModels.CharacterDetailViewModel.OnIdChanged(System.Int32)">
+            <summary>Executes the logic for when <see cref="P:OnePieceApi.ViewModels.CharacterDetailViewModel.Id"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:OnePieceApi.ViewModels.CharacterDetailViewModel.Id"/> is changed.</remarks>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.CharactersViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharactersViewModel.Characters">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharactersViewModel.characters"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharactersViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharactersViewModel.isLoading"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharactersViewModel.StatusMessage">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharactersViewModel.statusMessage"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharactersViewModel.SelectedCharacter">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CharactersViewModel.selectedCharacter"/>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.CharactersViewModel.loadCharactersCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.CharactersViewModel.LoadCharactersCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharactersViewModel.LoadCharactersCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CharactersViewModel.LoadCharacters"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.CharactersViewModel.goToDetailCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.CharactersViewModel.GoToDetailCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CharactersViewModel.GoToDetailCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CharactersViewModel.GoToDetail(OnePieceApi.Models.Character)"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.CrewDetailViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.id"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.Crew">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.crew"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewDetailViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewDetailViewModel.isLoading"/>
+        </member>
+        <member name="M:OnePieceApi.ViewModels.CrewDetailViewModel.OnIdChanged(System.Int32)">
+            <summary>Executes the logic for when <see cref="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:OnePieceApi.ViewModels.CrewDetailViewModel.Id"/> is changed.</remarks>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.CrewsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.Crews">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.crews"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.isLoading"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.StatusMessage">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.statusMessage"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.SelectedCrew">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.CrewsViewModel.selectedCrew"/>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.CrewsViewModel.loadCrewsCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.CrewsViewModel.LoadCrewsCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.LoadCrewsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CrewsViewModel.LoadCrews"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.CrewsViewModel.goToDetailCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.CrewsViewModel.GoToDetailCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.CrewsViewModel.GoToDetailCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.CrewsViewModel.GoToDetail(OnePieceApi.Models.Crew)"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.MainViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.MainViewModel.goToCharactersCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.MainViewModel.GoToCharactersCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.MainViewModel.GoToCharactersCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.MainViewModel.GoToCharacters"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.MainViewModel.goToCrewsCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.MainViewModel.GoToCrewsCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.MainViewModel.GoToCrewsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.MainViewModel.GoToCrews"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.MainViewModel.goToSearchCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.MainViewModel.GoToSearchCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.MainViewModel.GoToSearchCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.MainViewModel.GoToSearch"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.ViewModels.SearchViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.SearchViewModel.SearchTerm">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.SearchViewModel.searchTerm"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.SearchViewModel.Results">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.SearchViewModel.results"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.SearchViewModel.IsLoading">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.SearchViewModel.isLoading"/>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.SearchViewModel.StatusMessage">
+            <inheritdoc cref="F:OnePieceApi.ViewModels.SearchViewModel.statusMessage"/>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.SearchViewModel.searchCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.SearchViewModel.SearchCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.SearchViewModel.SearchCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.SearchViewModel.Search"/>.</summary>
+        </member>
+        <member name="F:OnePieceApi.ViewModels.SearchViewModel.goToDetailCommand">
+            <summary>The backing field for <see cref="P:OnePieceApi.ViewModels.SearchViewModel.GoToDetailCommand"/>.</summary>
+        </member>
+        <member name="P:OnePieceApi.ViewModels.SearchViewModel.GoToDetailCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:OnePieceApi.ViewModels.SearchViewModel.GoToDetail(OnePieceApi.Models.Character)"/>.</summary>
+        </member>
+        <member name="T:OnePieceApi.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+        <member name="P:JsonContext.Boolean">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.Category">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.Project">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.ProjectsJson">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.ProjectTask">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.Tag">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.ListProject">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.ListProjectTask">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.ListTag">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.Int32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:JsonContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:JsonContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:JsonContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:JsonContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:JsonContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_DatePicker.TextColorTo(Microsoft.Maui.Controls.DatePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Editor.TextColorTo(Microsoft.Maui.Controls.Editor,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Entry.TextColorTo(Microsoft.Maui.Controls.Entry,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_InputView.TextColorTo(Microsoft.Maui.Controls.InputView,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Label.TextColorTo(Microsoft.Maui.Controls.Label,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Picker.TextColorTo(Microsoft.Maui.Controls.Picker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_RadioButton.TextColorTo(Microsoft.Maui.Controls.RadioButton,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_SearchBar.TextColorTo(Microsoft.Maui.Controls.SearchBar,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_TimePicker.TextColorTo(Microsoft.Maui.Controls.TimePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TodoCategoryData">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TodoCategoryData" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TodoCategoryColors">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TodoCategoryColors" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Tasks">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Tasks" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Projects">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Projects" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsRefreshing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsRefreshing" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Today">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Today" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Categories">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Categories" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Tags">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Tags" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Name">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Name" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Description">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Description" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Category">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Category" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CategoryIndex">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CategoryIndex" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AllTags">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AllTags" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Icon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Icon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Icons">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Icons" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsCompleted">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsCompleted" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Project">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Project" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedProjectIndex">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedProjectIndex" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsExistingProject">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsExistingProject" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Id">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Id" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Character">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Character" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Characters">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Characters" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedCharacter">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedCharacter" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Crew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Crew" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Crews">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Crews" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedCrew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedCrew" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SearchTerm">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SearchTerm" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Results">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Results" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TodoCategoryData">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TodoCategoryData" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TodoCategoryColors">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TodoCategoryColors" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Tasks">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Tasks" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Projects">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Projects" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsRefreshing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsRefreshing" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Today">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Today" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Categories">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Categories" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Tags">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Tags" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Name">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Name" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Description">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Description" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Category">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Category" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CategoryIndex">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CategoryIndex" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AllTags">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AllTags" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Icon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Icon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Icons">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Icons" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsCompleted">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsCompleted" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Project">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Project" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedProjectIndex">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedProjectIndex" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsExistingProject">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsExistingProject" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Id">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Id" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Character">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Character" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Characters">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Characters" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedCharacter">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedCharacter" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Crew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Crew" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Crews">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Crews" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedCrew">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedCrew" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SearchTerm">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SearchTerm" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Results">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Results" generated properties.</summary>
+        </member>
+    </members>
+</doc>

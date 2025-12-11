@@ -6,29 +6,58 @@
              x:Name="CrewsRoot"
              x:DataType="vm:CrewsViewModel"
              Title="Tripulaciones">
-    <Grid RowDefinitions="Auto,*,Auto" Padding="16">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16" RowSpacing="12">
         <Label Text="Tripulaciones"
                FontSize="28"
                FontAttributes="Bold"
                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
                HorizontalOptions="Center" />
+        <Label Text="Explora las bandas pirata"
+               FontSize="14"
+               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+               HorizontalOptions="Center"
+               Grid.Row="1"/>
         <ActivityIndicator IsRunning="{Binding IsLoading}"
                            IsVisible="{Binding IsLoading}"
                            Color="{StaticResource Primary}"
-                           Grid.Row="1"/>
-        <CollectionView ItemsSource="{Binding Crews}" Grid.Row="1" SelectionMode="Single" SelectedItem="{Binding SelectedCrew, Mode=TwoWay}">
+                           Grid.Row="2"/>
+        <CollectionView ItemsSource="{Binding Crews}"
+                        Grid.Row="2"
+                        SelectionMode="None"
+                        ItemsLayout="VerticalList">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Crew">
                     <Frame CornerRadius="14"
-                           Padding="12"
-                           Margin="5"
+                           Padding="0"
+                           Margin="6,8"
+                           HeightRequest="120"
                            HasShadow="True"
                            BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
-                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto">
-                            <Image Source="{Binding Image}" HeightRequest="70" WidthRequest="70" Aspect="AspectFill" Grid.RowSpan="2" Margin="0,0,10,0"/>
-                            <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Primary}" Grid.Column="1"/>
-                            <Label Text="{Binding Captain}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" Grid.Column="1" Grid.Row="1"/>
-                            <Label Text="{Binding Bounty}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center"/>
+                        <Grid RowDefinitions="80,Auto" ColumnDefinitions="*">
+                            <Image Source="{Binding Image}"
+                                   HeightRequest="80"
+                                   Aspect="AspectFill"
+                                   Grid.RowSpan="1"
+                                   Grid.ColumnSpan="1"/>
+                            <StackLayout Grid.Row="1" Padding="12,6,12,10" Spacing="2">
+                                <Label Text="{Binding Name}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                <Label FontSize="12" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Capitán: " />
+                                            <Span Text="{Binding Captain}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label FontSize="12" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Barco: " />
+                                            <Span Text="{Binding Ship}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
@@ -43,6 +72,6 @@
                TextColor="{StaticResource Primary}"
                FontSize="16"
                HorizontalOptions="Center"
-               Grid.Row="2"/>
+               Grid.Row="3"/>
     </Grid>
 </ContentPage>

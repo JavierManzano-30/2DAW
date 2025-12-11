@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{83CB7072-F293-4CE9-A94E-19C97BE03DC4}|OnePieceApi\\OnePieceApi.csproj|solutionrelative:onepieceapi\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{83CB7072-F293-4CE9-A94E-19C97BE03DC4}|OnePieceApi\\OnePieceApi.csproj|c:\\users\\javie\\documents\\daw\\2daw\\despliegue\\visualstudio22-onepiece\\onepieceapi\\onepieceapi\\onepieceapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{83CB7072-F293-4CE9-A94E-19C97BE03DC4}|OnePieceApi\\OnePieceApi.csproj|solutionrelative:onepieceapi\\onepieceapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{83CB7072-F293-4CE9-A94E-19C97BE03DC4}|OnePieceApi\\OnePieceApi.csproj|c:\\users\\javie\\documents\\daw\\2daw\\despliegue\\visualstudio22-onepiece\\onepieceapi\\onepieceapi\\views\\characterdetailpage.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{83CB7072-F293-4CE9-A94E-19C97BE03DC4}|OnePieceApi\\OnePieceApi.csproj|solutionrelative:onepieceapi\\views\\characterdetailpage.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
@@ -22,16 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -46,21 +42,27 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AppShell.xaml",
-              "DocumentMoniker": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\AppShell.xaml",
-              "RelativeDocumentMoniker": "OnePieceApi\\AppShell.xaml",
-              "ToolTip": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\AppShell.xaml",
-              "RelativeToolTip": "OnePieceApi\\AppShell.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-12-05T18:08:31.609Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "OnePieceApi",
+              "DocumentMoniker": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\OnePieceApi.csproj",
+              "RelativeDocumentMoniker": "OnePieceApi\\OnePieceApi.csproj",
+              "ToolTip": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\OnePieceApi.csproj",
+              "RelativeToolTip": "OnePieceApi\\OnePieceApi.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-10T19:05:31.215Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "CharacterDetailPage.xaml",
               "DocumentMoniker": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\Views\\CharacterDetailPage.xaml",
               "RelativeDocumentMoniker": "OnePieceApi\\Views\\CharacterDetailPage.xaml",
@@ -68,8 +70,19 @@
               "RelativeToolTip": "OnePieceApi\\Views\\CharacterDetailPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-12-05T18:08:17.748Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T18:08:17.748Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\AppShell.xaml",
+              "RelativeDocumentMoniker": "OnePieceApi\\AppShell.xaml",
+              "ToolTip": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\AppShell.xaml",
+              "RelativeToolTip": "OnePieceApi\\AppShell.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-12-05T18:08:31.609Z"
             }
           ]
         }

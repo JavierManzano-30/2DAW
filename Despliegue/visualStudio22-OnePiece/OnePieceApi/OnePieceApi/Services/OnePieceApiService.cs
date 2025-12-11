@@ -7,6 +7,25 @@ public class OnePieceApiService
 {
     private readonly HttpClient _httpClient;
     private const string BaseUrl = "https://api-onepiece-final-gdh7anbmfsakb6ew.spaincentral-01.azurewebsites.net/api/";
+    private const string PlaceholderImage = "https://placehold.co/400x400?text=One+Piece";
+    private static readonly Dictionary<string, string> CharacterImages = new(StringComparer.OrdinalIgnoreCase)
+    {
+        { "Monkey D Luffy", "luffy.jpeg" },
+        { "Luffy", "luffy.jpeg" },
+        { "Roronoa Zoro", "zoro.jpeg" },
+        { "Zoro", "zoro.jpeg" },
+        { "Sanji", "sanji.jpeg" },
+        { "Nami", "nami.jpeg" },
+        { "Usopp", "usopp.jpeg" },
+        { "Usop", "usopp.jpeg" },
+        { "Chopper", "chopper.jpeg" },
+        { "Tony Tony Chopper", "chopper.jpeg" },
+        { "Tony-Tony Chopper", "chopper.jpeg" },
+        { "Brook", "brook.jpeg" },
+        { "Franky", "franky.jpeg" },
+        { "Nico Robin", "robin.jpeg" },
+        { "Robin", "robin.jpeg" }
+    };
 
     public OnePieceApiService(HttpClient httpClient)
     {
@@ -31,6 +50,24 @@ public class OnePieceApiService
             throw new InvalidOperationException("No se encontraron personajes en la respuesta de la API.");
 
         return list;
+    }
+
+    public async Task<List<Character>> GetCharactersByCrew(string crewName)
+    {
+        if (string.IsNullOrWhiteSpace(crewName))
+            return new List<Character>();
+
+        var all = await GetAllCharacters();
+        var normalizedCrew = crewName.Replace("Tripulación:", string.Empty, StringComparison.OrdinalIgnoreCase).Trim();
+
+        return all
+            .Where(c =>
+            {
+                var raw = c.Crew?.Trim() ?? string.Empty;
+                return string.Equals(raw, crewName.Trim(), StringComparison.OrdinalIgnoreCase) ||
+                       string.Equals(raw, normalizedCrew, StringComparison.OrdinalIgnoreCase);
+            })
+            .ToList();
     }
 
     public async Task<Character?> GetCharacterById(int id)
@@ -96,9 +133,24 @@ public class OnePieceApiService
         if (string.IsNullOrWhiteSpace(term))
             return characters;
 
-        return characters
-            .Where(c => c.Name.Contains(term, StringComparison.OrdinalIgnoreCase))
+        var tokens = term
+            .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .ToList();
+
+        // Permite buscar múltiples personajes o por tripulación
+        return characters.Where(c =>
+        {
+            if (tokens.Count > 1)
+            {
+                return tokens.Any(t =>
+                    c.Name.Contains(t, StringComparison.OrdinalIgnoreCase) ||
+                    (!string.IsNullOrWhiteSpace(c.Crew) && c.Crew.Contains(t, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            var single = tokens.FirstOrDefault() ?? term;
+            return c.Name.Contains(single, StringComparison.OrdinalIgnoreCase) ||
+                   (!string.IsNullOrWhiteSpace(c.Crew) && c.Crew.Contains(single, StringComparison.OrdinalIgnoreCase));
+        }).ToList();
     }
 
     private async Task<JsonElement?> FetchJson(string path)
@@ -137,7 +189,7 @@ public class OnePieceApiService
         {
             Id = ReadInt(element, "id"),
             Name = ReadString(element, "name", "nombre"),
-            Image = ReadString(element, "image", "img", "photo"),
+            Image = EnsureCharacterImage(ReadString(element, "image", "img", "photo"), ReadString(element, "name", "nombre")),
             Bounty = ReadString(element, "bounty", "bountyString", "bounty_berry"),
             Crew = ReadString(element, "crew", "affiliation", "family"),
             Age = ReadString(element, "age"),
@@ -151,7 +203,17 @@ public class OnePieceApiService
         foreach (var name in names)
         {
             if (element.TryGetProperty(name, out var property) && property.ValueKind != JsonValueKind.Null && property.ValueKind != JsonValueKind.Undefined)
+            {
+                if (property.ValueKind == JsonValueKind.Object)
+                {
+                    // Si viene un objeto, intenta devolver el campo "name" interno
+                    if (property.TryGetProperty("name", out var innerName) && innerName.ValueKind != JsonValueKind.Null)
+                        return innerName.ToString();
+                    continue;
+                }
+
                 return property.ToString();
+            }
         }
 
         return string.Empty;
@@ -179,12 +241,44 @@ public class OnePieceApiService
         return new Crew
         {
             Id = ReadInt(element, "id"),
-            Name = ReadString(element, "name", "crew"),
+            Name = NormalizeCrewName(ReadString(element, "name", "crew")),
             Captain = ReadString(element, "captain", "leader"),
             Ship = ReadString(element, "ship", "boat", "vessel"),
-            Bounty = ReadString(element, "bounty", "total_bounty"),
-            Image = ReadString(element, "image", "img"),
+            Bounty = string.Empty,
+            Image = EnsureImage(ReadString(element, "image", "img")),
             Description = ReadString(element, "description", "about", "resume")
         };
+    }
+
+    private static string NormalizeCrewName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return string.Empty;
+
+        var trimmed = name.Trim();
+        // Quita sufijo "crew" y añade prefijo en español
+        if (trimmed.EndsWith("crew", StringComparison.OrdinalIgnoreCase))
+        {
+            trimmed = trimmed[..^4].Trim();
+        }
+
+        return $"Tripulación: {trimmed}";
+    }
+
+    private static string EnsureImage(string url) =>
+        string.IsNullOrWhiteSpace(url) ? PlaceholderImage : url;
+
+    private static string EnsureCharacterImage(string url, string name)
+    {
+        if (!string.IsNullOrWhiteSpace(url) && !url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+            return url;
+
+        if (!string.IsNullOrWhiteSpace(url))
+            return url;
+
+        if (!string.IsNullOrWhiteSpace(name) && CharacterImages.TryGetValue(name.Trim(), out var local))
+            return local;
+
+        return PlaceholderImage;
     }
 }

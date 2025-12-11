@@ -30,16 +30,16 @@
             <CollectionView ItemsSource="{Binding Results}" SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Character">
-                        <Frame Padding="12"
-                               CornerRadius="12"
-                               Margin="0,4"
+                        <Frame Padding="0"
+                               CornerRadius="14"
+                               Margin="0,6"
+                               HasShadow="True"
                                BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
-                            <Grid ColumnDefinitions="80,*" ColumnSpacing="10">
-                                <Image Source="{Binding Image}" HeightRequest="70" WidthRequest="70" Aspect="AspectFill" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                    <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-                                    <Label Text="{Binding Crew}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
-                                </VerticalStackLayout>
+                            <Grid ColumnDefinitions="120,*,Auto" RowDefinitions="Auto,Auto" Padding="10">
+                                <Image Source="{Binding Image}" HeightRequest="90" WidthRequest="110" Aspect="AspectFill" Grid.RowSpan="2" Margin="0,0,10,0"/>
+                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" Grid.Column="1"/>
+                                <Label Text="{Binding Crew}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" Grid.Column="1" Grid.Row="1"/>
+                                <Label Text="{Binding Bounty}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center"/>
                             </Grid>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer
