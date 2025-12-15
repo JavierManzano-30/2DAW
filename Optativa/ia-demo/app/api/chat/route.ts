@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 const openaiBaseUrl =
   process.env.OPENAI_API_BASE ||
   process.env.OPENAI_BASE_URL ||
-  "https://models.inference.ai.azure.com/v1";
+  "https://models.inference.ai.azure.com";
 
 const SYSTEM_PROMPT = `Eres un asistente que solo responde basándose en el contexto proporcionado.
 Si la pregunta no está respondida por el contexto, di claramente que no tienes información para responder.
@@ -38,7 +38,8 @@ export async function POST(req: Request) {
   const embeddingResult = await embed({
     model: openai.embedding("text-embedding-3-small", {
       apiKey: process.env.OPENAI_API_KEY,
-      baseUrl: openaiBaseUrl,
+      baseURL: openaiBaseUrl,
+      compatibility: "strict",
     }), // dimensión 1536
     value: question,
   });
@@ -71,7 +72,8 @@ export async function POST(req: Request) {
   const response = await streamText({
     model: openai("gpt-4o-mini", {
       apiKey: process.env.OPENAI_API_KEY,
-      baseUrl: openaiBaseUrl,
+      baseURL: openaiBaseUrl,
+      compatibility: "strict",
     }),
     messages: augmentedMessages,
   });

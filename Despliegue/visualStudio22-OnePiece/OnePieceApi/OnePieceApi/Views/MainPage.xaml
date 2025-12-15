@@ -15,9 +15,6 @@
                            FontSize="32"
                            FontAttributes="Bold"
                            TextColor="White" />
-                    <Label Text="Consulta tu API en Azure para ver personajes y tripulaciones."
-                           FontSize="16"
-                           TextColor="White" />
                 </StackLayout>
             </Grid>
 
@@ -32,29 +29,6 @@
                         FontSize="18"
                         Command="{Binding GoToSearchCommand}" />
             </VerticalStackLayout>
-
-            <Grid Padding="24" RowSpacing="14">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Text="Explora el universo One Piece"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"/>
-                <Grid Grid.Row="1" ColumnSpacing="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Frame Grid.Column="0" CornerRadius="12" HasShadow="True" Padding="0">
-                        <Image Source="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=800&amp;q=80" Aspect="AspectFill"/>
-                    </Frame>
-                    <Frame Grid.Column="1" CornerRadius="12" HasShadow="True" Padding="0">
-                        <Image Source="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=800&amp;q=80" Aspect="AspectFill"/>
-                    </Frame>
-                </Grid>
-            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

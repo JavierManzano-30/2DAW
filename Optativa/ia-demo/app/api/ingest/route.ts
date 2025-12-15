@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 const openaiBaseUrl =
   process.env.OPENAI_API_BASE ||
   process.env.OPENAI_BASE_URL ||
-  "https://models.inference.ai.azure.com/v1";
+  "https://models.inference.ai.azure.com";
 
 export async function POST(req: NextRequest) {
   try {
@@ -42,7 +42,8 @@ export async function POST(req: NextRequest) {
         const embeddingResult = await embed({
           model: openai.embedding("text-embedding-3-small", {
             apiKey: process.env.OPENAI_API_KEY,
-            baseUrl: openaiBaseUrl,
+            baseURL: openaiBaseUrl,
+            compatibility: "strict",
           }),
           value: chunk,
         });

@@ -8,34 +8,12 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource Primary}"/>
-            <Image Source="{Binding Crew.Image}" HeightRequest="200" Aspect="AspectFill" HorizontalOptions="Center"/>
-            <Label Text="{Binding Crew.Name}" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center"/>
-            <Label Text="Capitán" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
-            <Label Text="{Binding Crew.Captain}" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
-            <Label Text="Barco" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
-            <Label Text="{Binding Crew.Ship}" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
-            <Label Text="Recompensa total" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
-            <Label Text="{Binding Crew.Bounty}" FontSize="20" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
-            <Label Text="Descripción" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"/>
-            <Label Text="{Binding Crew.Description}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
-            <Button Text="Volver" Clicked="OnBackClicked" />
-
-            <Label Text="Personajes de esta tripulación"
-                   FontSize="20"
+            <Label Text="{Binding Crew.Name}"
+                   FontSize="32"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource Primary}" />
-            <CollectionView ItemsSource="{Binding Characters}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Character">
-                        <Frame CornerRadius="12" Padding="10" Margin="0,6" HasShadow="True" BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
-                            <VerticalStackLayout Spacing="4">
-                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-                                <Label Text="{Binding Bounty}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}" />
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                   TextColor="{StaticResource Primary}"
+                   HorizontalOptions="Center" />
+            <Button Text="Volver" Clicked="OnBackClicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

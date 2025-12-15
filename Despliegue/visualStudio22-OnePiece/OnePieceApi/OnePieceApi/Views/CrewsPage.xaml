@@ -28,37 +28,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Crew">
                     <Frame CornerRadius="14"
-                           Padding="0"
+                           Padding="16,12"
                            Margin="6,8"
-                           HeightRequest="120"
                            HasShadow="True"
                            BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryBackground}, Dark={StaticResource DarkSecondaryBackground}}">
-                        <Grid RowDefinitions="80,Auto" ColumnDefinitions="*">
-                            <Image Source="{Binding Image}"
-                                   HeightRequest="80"
-                                   Aspect="AspectFill"
-                                   Grid.RowSpan="1"
-                                   Grid.ColumnSpan="1"/>
-                            <StackLayout Grid.Row="1" Padding="12,6,12,10" Spacing="2">
-                                <Label Text="{Binding Name}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-                                <Label FontSize="12" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="Capitán: " />
-                                            <Span Text="{Binding Captain}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <Label FontSize="12" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="Barco: " />
-                                            <Span Text="{Binding Ship}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </StackLayout>
-                        </Grid>
+                        <Label Text="{Binding Name}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" />
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding BindingContext.GoToDetailCommand, Source={x:Reference Name=CrewsRoot}}"
