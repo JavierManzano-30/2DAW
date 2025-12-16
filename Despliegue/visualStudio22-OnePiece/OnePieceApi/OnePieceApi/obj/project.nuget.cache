@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "i7YkvwL5oCk=",
+  "dgSpecHash": "eqIj/fbrFdY=",
   "success": true,
   "projectFilePath": "C:\\Users\\javie\\Documents\\DAW\\2DAW\\Despliegue\\visualStudio22-OnePiece\\OnePieceApi\\OnePieceApi\\OnePieceApi.csproj",
   "expectedPackageFiles": [
@@ -139,10 +139,6 @@
     "C:\\Users\\javie\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.9.0.3\\xamarin.kotlinx.coroutines.core.jvm.1.9.0.3.nupkg.sha512",
     "C:\\Users\\javie\\.nuget\\packages\\xamarin.kotlinx.serialization.core\\1.7.3.4\\xamarin.kotlinx.serialization.core.1.7.3.4.nupkg.sha512",
     "C:\\Users\\javie\\.nuget\\packages\\xamarin.kotlinx.serialization.core.jvm\\1.7.3.4\\xamarin.kotlinx.serialization.core.jvm.1.7.3.4.nupkg.sha512",
-    "C:\\Users\\javie\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.307\\microsoft.net.sdk.compilers.toolset.9.0.307.nupkg.sha512",
-    "C:\\Users\\javie\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.307\\microsoft.net.sdk.compilers.toolset.9.0.307.nupkg.sha512",
-    "C:\\Users\\javie\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.307\\microsoft.net.sdk.compilers.toolset.9.0.307.nupkg.sha512",
-    "C:\\Users\\javie\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.307\\microsoft.net.sdk.compilers.toolset.9.0.307.nupkg.sha512",
     "C:\\Users\\javie\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
   ],
   "logs": []
