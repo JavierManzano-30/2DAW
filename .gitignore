@@ -4,3 +4,16 @@ ProyectoIntegrado/JMO-PI-FRONT/
 DWES-JMO/
 JMO-EC/
 Optativa/JMO-InteligenciaArtificial/
+# Node
+node_modules/
+
+# .NET
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# Android
+**/android/bin/
+**/android/obj/
