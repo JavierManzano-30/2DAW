@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OnePieceApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+ad84dc192b26bdf4f438447596cd90a472df2ebd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+30249e1c90445f795953f0f258cf71b7e369414c")]
 [assembly: System.Reflection.AssemblyProductAttribute("OnePieceApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OnePieceApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
