@@ -152,7 +152,14 @@ export default function App() {
                     <h4>{tarea.titulo}</h4>
                     <p>{tarea.descripcion}</p>
                   </div>
-                  <code>{id}</code>
+                  <button
+                    type="button"
+                    className="id-chip"
+                    onClick={() => setDeleteId(id)}
+                    title="Click para poner este ID en el campo de eliminar"
+                  >
+                    {id}
+                  </button>
                 </li>
               );
             })}

@@ -164,6 +164,23 @@ textarea {
   color: #6b4e2e;
 }
 
+.id-chip {
+  background: #fff3e1;
+  color: #6a4b24;
+  border: 1px solid #e8d2b8;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.id-chip:hover {
+  transform: none;
+  box-shadow: none;
+  background: #ffe9cc;
+}
+
 .error {
   color: #9b2c2c;
   font-weight: 700;
