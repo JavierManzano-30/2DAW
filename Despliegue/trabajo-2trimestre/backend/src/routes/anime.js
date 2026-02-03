@@ -15,7 +15,7 @@ async function proxyJikan(url, res) {
     }
 
     return res.json(data);
-  } catch (error) {
+  } catch (_error) {
     return res.status(500).json({ error: "No se pudo conectar con Jikan" });
   }
 }

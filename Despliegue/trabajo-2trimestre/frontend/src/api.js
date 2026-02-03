@@ -19,27 +19,27 @@ async function request(path, options = {}) {
   return data;
 }
 
-export async function getTareas() {
-  return request("/tareas");
-}
-
-export async function createTarea({ titulo, descripcion }) {
-  return request("/tareas", {
-    method: "POST",
-    body: JSON.stringify({ titulo, descripcion })
-  });
-}
-
-export async function deleteTarea(id) {
-  return request(`/tareas/${id}`, {
-    method: "DELETE"
-  });
-}
-
 export async function getAnimeTop() {
   return request("/anime/top");
 }
 
 export async function searchAnime(query) {
   return request(`/anime/search?q=${encodeURIComponent(query)}`);
+}
+
+export async function getFavoritos() {
+  return request("/favoritos");
+}
+
+export async function addFavorito(payload) {
+  return request("/favoritos", {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+}
+
+export async function removeFavorito(id) {
+  return request(`/favoritos/${id}`, {
+    method: "DELETE"
+  });
 }

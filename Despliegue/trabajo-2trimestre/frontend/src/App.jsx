@@ -1,15 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  createTarea,
-  deleteTarea,
+  addFavorito,
   getAnimeTop,
-  getTareas,
+  getFavoritos,
+  removeFavorito,
   searchAnime
 } from "./api.js";
-
-function mapId(tarea) {
-  return tarea._id || tarea.id;
-}
 
 function truncateText(text, max = 140) {
   if (!text) return "";
@@ -18,7 +14,7 @@ function truncateText(text, max = 140) {
 }
 
 function getYear(item) {
-  return item?.year || item?.aired?.prop?.from?.year || "?";
+  return item?.year || item?.aired?.prop?.from?.year || null;
 }
 
 function getImage(item) {
@@ -26,79 +22,37 @@ function getImage(item) {
 }
 
 export default function App() {
-  const [tareas, setTareas] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [titulo, setTitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [deleteId, setDeleteId] = useState("");
-  const [lastAction, setLastAction] = useState("");
-
   const [animeItems, setAnimeItems] = useState([]);
   const [animeQuery, setAnimeQuery] = useState("");
   const [animeLoading, setAnimeLoading] = useState(false);
   const [animeError, setAnimeError] = useState("");
+
+  const [favoritos, setFavoritos] = useState([]);
+  const [favLoading, setFavLoading] = useState(false);
+  const [favError, setFavError] = useState("");
+  const [lastAction, setLastAction] = useState("");
 
   const apiUrl = useMemo(
     () => import.meta.env.VITE_API_URL || "http://localhost:4000",
     []
   );
 
-  async function handleLoad() {
-    setError("");
-    setLoading(true);
-    try {
-      const data = await getTareas();
-      setTareas(data);
-      setLastAction("Lista cargada correctamente.");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    async function loadFavs() {
+      setFavError("");
+      setFavLoading(true);
+      try {
+        const data = await getFavoritos();
+        setFavoritos(data);
+      } catch (err) {
+        setFavError(err.message);
+      } finally {
+        setFavLoading(false);
+      }
     }
-  }
 
-  async function handleCreate() {
-    setError("");
-    if (!titulo.trim() || !descripcion.trim()) {
-      setError("Rellena titulo y descripcion.");
-      return;
-    }
-    setLoading(true);
-    try {
-      const nueva = await createTarea({
-        titulo: titulo.trim(),
-        descripcion: descripcion.trim()
-      });
-      setTareas((prev) => [nueva, ...prev]);
-      setTitulo("");
-      setDescripcion("");
-      setLastAction("Tarea creada correctamente.");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleDelete() {
-    setError("");
-    if (!deleteId.trim()) {
-      setError("Indica un ID para eliminar.");
-      return;
-    }
-    setLoading(true);
-    try {
-      await deleteTarea(deleteId.trim());
-      setTareas((prev) => prev.filter((tarea) => mapId(tarea) !== deleteId.trim()));
-      setDeleteId("");
-      setLastAction("Tarea eliminada correctamente.");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+    loadFavs();
+  }, []);
 
   async function handleAnimeTop() {
     setAnimeError("");
@@ -130,104 +84,64 @@ export default function App() {
     }
   }
 
+  async function handleAddFavorito(item) {
+    setFavError("");
+    try {
+      const payload = {
+        mal_id: item.mal_id,
+        title: item.title,
+        image: getImage(item),
+        score: item.score ?? null,
+        year: getYear(item)
+      };
+      const saved = await addFavorito(payload);
+
+      setFavoritos((prev) => {
+        const exists = prev.some((fav) => fav.mal_id === saved.mal_id);
+        if (exists) return prev;
+        return [saved, ...prev];
+      });
+      setLastAction("Favorito guardado.");
+    } catch (err) {
+      setFavError(err.message);
+    }
+  }
+
+  async function handleRemoveFavorito(id) {
+    setFavError("");
+    try {
+      await removeFavorito(id);
+      setFavoritos((prev) => prev.filter((fav) => fav._id !== id));
+      setLastAction("Favorito eliminado.");
+    } catch (err) {
+      setFavError(err.message);
+    }
+  }
+
   return (
     <div className="page">
       <header className="hero">
         <div>
           <p className="eyebrow">Despliegue - SPA + API</p>
-          <h1>Tareas SPA</h1>
+          <h1>Anime Hub</h1>
           <p className="sub">
-            Frontend React que consume la API REST. Base URL: <span>{apiUrl}</span>
+            Busqueda y favoritos con Jikan. Base URL: <span>{apiUrl}</span>
           </p>
         </div>
         <div className="status">
-          <div className={`pill ${loading ? "pill--loading" : ""}`}>
-            {loading ? "Procesando..." : "Listo"}
+          <div className={`pill ${animeLoading || favLoading ? "pill--loading" : ""}`}>
+            {animeLoading || favLoading ? "Procesando..." : "Listo"}
           </div>
           {lastAction && <p className="hint">{lastAction}</p>}
         </div>
       </header>
 
       <section className="panel">
-        <h2>Acciones</h2>
-        <div className="actions">
-          <button onClick={handleLoad}>GET /tareas</button>
-          <button onClick={handleCreate}>POST /tareas</button>
-          <button onClick={handleDelete}>DELETE /tareas/:id</button>
-        </div>
-        {error && <p className="error">{error}</p>}
-      </section>
-
-      <section className="grid">
-        <div className="panel">
-          <h3>Nueva tarea</h3>
-          <label>
-            Titulo
-            <input
-              value={titulo}
-              onChange={(event) => setTitulo(event.target.value)}
-              placeholder="Ej: Preparar despliegue"
-            />
-          </label>
-          <label>
-            Descripcion
-            <textarea
-              value={descripcion}
-              onChange={(event) => setDescripcion(event.target.value)}
-              placeholder="Describe la tarea"
-            />
-          </label>
-        </div>
-
-        <div className="panel">
-          <h3>Eliminar tarea</h3>
-          <label>
-            ID de la tarea
-            <input
-              value={deleteId}
-              onChange={(event) => setDeleteId(event.target.value)}
-              placeholder="_id de Mongo o id en memoria"
-            />
-          </label>
-          <p className="hint">Puedes copiar el ID desde la lista de tareas.</p>
-        </div>
-      </section>
-
-      <section className="panel">
-        <h3>Listado</h3>
-        {tareas.length === 0 ? (
-          <p className="hint">No hay tareas cargadas. Pulsa "GET /tareas".</p>
-        ) : (
-          <ul className="tareas">
-            {tareas.map((tarea) => {
-              const id = mapId(tarea);
-              return (
-                <li key={id}>
-                  <div>
-                    <h4>{tarea.titulo}</h4>
-                    <p>{tarea.descripcion}</p>
-                  </div>
-                  <button
-                    type="button"
-                    className="id-chip"
-                    onClick={() => setDeleteId(id)}
-                    title="Click para poner este ID en el campo de eliminar"
-                  >
-                    {id}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </section>
-
-      <section className="panel">
-        <h3>Anime (Jikan)</h3>
+        <h2>Explorar anime</h2>
         <div className="anime-controls">
-          <button onClick={handleAnimeTop}>TOP /anime</button>
+          <button onClick={handleAnimeTop}>Top anime</button>
           <label className="anime-search">
-            Buscar anime
+            Buscar por titulo
             <input
               value={animeQuery}
               onChange={(event) => setAnimeQuery(event.target.value)}
@@ -241,9 +155,9 @@ export default function App() {
       </section>
 
       <section className="panel">
-        <h3>Resultados de anime</h3>
+        <h3>Resultados</h3>
         {animeItems.length === 0 ? (
-          <p className="hint">Sin resultados todavia. Prueba TOP o una busqueda.</p>
+          <p className="hint">Sin resultados todavia. Prueba top o una busqueda.</p>
         ) : (
           <div className="anime-grid">
             {animeItems.map((item) => {
@@ -260,18 +174,53 @@ export default function App() {
                     <div className="anime-meta">
                       <span>Score: {item.score ?? "N/A"}</span>
                       <span>Episodios: {item.episodes ?? "?"}</span>
-                      <span>Ano: {getYear(item)}</span>
+                      <span>Ano: {getYear(item) ?? "?"}</span>
                     </div>
                     {item.synopsis && (
                       <p className="anime-synopsis">
                         {truncateText(item.synopsis)}
                       </p>
                     )}
+                    <button
+                      className="anime-action"
+                      onClick={() => handleAddFavorito(item)}
+                    >
+                      Guardar en favoritos
+                    </button>
                   </div>
                 </article>
               );
             })}
           </div>
+        )}
+      </section>
+
+      <section className="panel">
+        <h3>Mis favoritos</h3>
+        {favLoading && <p className="hint">Cargando favoritos...</p>}
+        {favError && <p className="error">{favError}</p>}
+        {favoritos.length === 0 ? (
+          <p className="hint">Aun no tienes favoritos guardados.</p>
+        ) : (
+          <ul className="favoritos">
+            {favoritos.map((fav) => (
+              <li key={fav._id}>
+                <div>
+                  <h4>{fav.title}</h4>
+                  <p>
+                    Score: {fav.score ?? "N/A"} · Ano: {fav.year ?? "?"}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="id-chip"
+                  onClick={() => handleRemoveFavorito(fav._id)}
+                >
+                  Quitar
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
     </div>
