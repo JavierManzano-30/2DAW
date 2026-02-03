@@ -181,6 +181,74 @@ textarea {
   background: #ffe9cc;
 }
 
+.anime-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.anime-search {
+  min-width: 220px;
+}
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.anime-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  border: 1px solid #edd9c5;
+  background: #fffaf4;
+  overflow: hidden;
+}
+
+.anime-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.anime-placeholder {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3e6d6;
+  color: #7a5a37;
+  font-weight: 600;
+}
+
+.anime-body {
+  padding: 12px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.anime-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.anime-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: #7a5a37;
+}
+
+.anime-synopsis {
+  margin: 0;
+  font-size: 13px;
+  color: #5a4634;
+}
+
 .error {
   color: #9b2c2c;
   font-weight: 700;

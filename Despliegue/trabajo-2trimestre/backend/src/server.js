@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const { connectToMongo } = require("./db");
 const { createRepository } = require("./data/tareaRepository");
 const tareasRouter = require("./routes/tareas");
+const animeRouter = require("./routes/anime");
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ async function start() {
   });
 
   app.use("/tareas", tareasRouter);
+  app.use("/anime", animeRouter);
 
   app.listen(PORT, () => {
     console.log(`API listening on port ${PORT}`);

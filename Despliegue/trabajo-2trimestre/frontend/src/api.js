@@ -35,3 +35,11 @@ export async function deleteTarea(id) {
     method: "DELETE"
   });
 }
+
+export async function getAnimeTop() {
+  return request("/anime/top");
+}
+
+export async function searchAnime(query) {
+  return request(`/anime/search?q=${encodeURIComponent(query)}`);
+}
