@@ -154,6 +154,11 @@ paths:
           description: Filtrar por ID de usuario
           schema:
             type: integer
+        - name: sort
+          in: query
+          description: Ordenar resultados (created_at:desc, votes:desc)
+          schema:
+            type: string
       responses:
         '200':
           description: Lista paginada de fotos
