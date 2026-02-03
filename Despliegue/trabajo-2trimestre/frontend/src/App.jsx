@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   addFavorito,
+  getAnimeGenres,
   getAnimeTop,
   getFavoritos,
   removeFavorito,
@@ -21,11 +22,51 @@ function getImage(item) {
   return item?.images?.jpg?.image_url || item?.images?.webp?.image_url || "";
 }
 
+const TYPE_OPTIONS = [
+  { value: "", label: "Todos" },
+  { value: "tv", label: "TV" },
+  { value: "movie", label: "Película" },
+  { value: "ova", label: "OVA" },
+  { value: "special", label: "Special" },
+  { value: "ona", label: "ONA" },
+  { value: "music", label: "Music" }
+];
+
+const STATUS_OPTIONS = [
+  { value: "", label: "Todos" },
+  { value: "airing", label: "En emisión" },
+  { value: "complete", label: "Finalizado" },
+  { value: "upcoming", label: "Próximo" }
+];
+
+const ORDER_OPTIONS = [
+  { value: "", label: "Relevancia" },
+  { value: "score", label: "Score" },
+  { value: "popularity", label: "Popularidad" },
+  { value: "favorites", label: "Favoritos" },
+  { value: "episodes", label: "Episodios" },
+  { value: "start_date", label: "Fecha inicio" }
+];
+
+const SORT_OPTIONS = [
+  { value: "desc", label: "Desc" },
+  { value: "asc", label: "Asc" }
+];
+
 export default function App() {
   const [animeItems, setAnimeItems] = useState([]);
   const [animeQuery, setAnimeQuery] = useState("");
   const [animeLoading, setAnimeLoading] = useState(false);
   const [animeError, setAnimeError] = useState("");
+
+  const [genres, setGenres] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [orderBy, setOrderBy] = useState("");
+  const [sort, setSort] = useState("desc");
+  const [minScore, setMinScore] = useState("");
+  const [maxScore, setMaxScore] = useState("");
 
   const [favoritos, setFavoritos] = useState([]);
   const [favLoading, setFavLoading] = useState(false);
@@ -38,12 +79,16 @@ export default function App() {
   );
 
   useEffect(() => {
-    async function loadFavs() {
+    async function loadInitial() {
       setFavError("");
       setFavLoading(true);
       try {
-        const data = await getFavoritos();
-        setFavoritos(data);
+        const [favData, genreData] = await Promise.all([
+          getFavoritos(),
+          getAnimeGenres()
+        ]);
+        setFavoritos(favData);
+        setGenres(genreData?.data || []);
       } catch (err) {
         setFavError(err.message);
       } finally {
@@ -51,7 +96,7 @@ export default function App() {
       }
     }
 
-    loadFavs();
+    loadInitial();
   }, []);
 
   async function handleAnimeTop() {
@@ -75,7 +120,16 @@ export default function App() {
     }
     setAnimeLoading(true);
     try {
-      const data = await searchAnime(animeQuery.trim());
+      const filters = {
+        genres: selectedGenre || undefined,
+        type: selectedType || undefined,
+        status: selectedStatus || undefined,
+        order_by: orderBy || undefined,
+        sort: sort || undefined,
+        min_score: minScore || undefined,
+        max_score: maxScore || undefined
+      };
+      const data = await searchAnime(animeQuery.trim(), filters);
       setAnimeItems(data?.data || []);
     } catch (err) {
       setAnimeError(err.message);
@@ -146,6 +200,90 @@ export default function App() {
               value={animeQuery}
               onChange={(event) => setAnimeQuery(event.target.value)}
               placeholder="Ej: Fullmetal Alchemist"
+            />
+          </label>
+          <label className="anime-search">
+            Genero
+            <select
+              value={selectedGenre}
+              onChange={(event) => setSelectedGenre(event.target.value)}
+            >
+              <option value="">Todos</option>
+              {genres.map((genre) => (
+                <option key={genre.mal_id} value={genre.mal_id}>
+                  {genre.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="anime-search">
+            Tipo
+            <select
+              value={selectedType}
+              onChange={(event) => setSelectedType(event.target.value)}
+            >
+              {TYPE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="anime-search">
+            Estado
+            <select
+              value={selectedStatus}
+              onChange={(event) => setSelectedStatus(event.target.value)}
+            >
+              {STATUS_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="anime-search">
+            Ordenar por
+            <select value={orderBy} onChange={(event) => setOrderBy(event.target.value)}>
+              {ORDER_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="anime-search">
+            Orden
+            <select value={sort} onChange={(event) => setSort(event.target.value)}>
+              {SORT_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="anime-search">
+            Score min
+            <input
+              type="number"
+              min="0"
+              max="10"
+              step="0.1"
+              value={minScore}
+              onChange={(event) => setMinScore(event.target.value)}
+              placeholder="0"
+            />
+          </label>
+          <label className="anime-search">
+            Score max
+            <input
+              type="number"
+              min="0"
+              max="10"
+              step="0.1"
+              value={maxScore}
+              onChange={(event) => setMaxScore(event.target.value)}
+              placeholder="10"
             />
           </label>
           <button onClick={handleAnimeSearch}>Buscar</button>

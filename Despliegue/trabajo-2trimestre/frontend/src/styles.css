@@ -110,6 +110,7 @@ label {
 }
 
 input,
+select,
 textarea {
   border: 1px solid #dec9b1;
   border-radius: 10px;
@@ -119,14 +120,18 @@ textarea {
 }
 
 .anime-controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px;
-  align-items: flex-end;
+  align-items: end;
+}
+
+.anime-controls button {
+  align-self: end;
 }
 
 .anime-search {
-  min-width: 220px;
+  min-width: 160px;
 }
 
 .anime-grid {
@@ -142,6 +147,7 @@ textarea {
   border: 1px solid #edd9c5;
   background: #fffaf4;
   overflow: hidden;
+  height: 100%;
 }
 
 .anime-card img {
@@ -165,6 +171,7 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
 }
 
 .anime-title {
@@ -188,6 +195,7 @@ textarea {
 
 .anime-action {
   align-self: flex-start;
+  margin-top: auto;
 }
 
 .favoritos {

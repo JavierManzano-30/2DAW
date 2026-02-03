@@ -20,6 +20,11 @@ async function proxyJikan(url, res) {
   }
 }
 
+router.get("/genres", (req, res) => {
+  const url = `${BASE_URL}/genres/anime`;
+  return proxyJikan(url, res);
+});
+
 router.get("/top", (req, res) => {
   const limit = Number(req.query.limit) || 10;
   const url = `${BASE_URL}/top/anime?limit=${limit}`;
@@ -33,8 +38,31 @@ router.get("/search", (req, res) => {
     return res.status(400).json({ error: "query es obligatorio" });
   }
 
-  const limit = Number(req.query.limit) || 10;
-  const url = `${BASE_URL}/anime?q=${encodeURIComponent(query)}&limit=${limit}`;
+  const params = new URLSearchParams();
+  params.set("q", query);
+  params.set("limit", String(Number(req.query.limit) || 10));
+
+  const allowed = [
+    "type",
+    "status",
+    "rating",
+    "order_by",
+    "sort",
+    "min_score",
+    "max_score",
+    "year",
+    "genres",
+    "sfw"
+  ];
+
+  allowed.forEach((key) => {
+    const value = req.query[key];
+    if (value !== undefined && value !== "") {
+      params.set(key, String(value));
+    }
+  });
+
+  const url = `${BASE_URL}/anime?${params.toString()}`;
   return proxyJikan(url, res);
 });
 

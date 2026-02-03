@@ -23,8 +23,17 @@ export async function getAnimeTop() {
   return request("/anime/top");
 }
 
-export async function searchAnime(query) {
-  return request(`/anime/search?q=${encodeURIComponent(query)}`);
+export async function getAnimeGenres() {
+  return request("/anime/genres");
+}
+
+export async function searchAnime(query, filters = {}) {
+  const params = new URLSearchParams({ q: query });
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === "") return;
+    params.set(key, String(value));
+  });
+  return request(`/anime/search?${params.toString()}`);
 }
 
 export async function getFavoritos() {
