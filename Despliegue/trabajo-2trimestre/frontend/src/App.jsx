@@ -73,6 +73,8 @@ export default function App() {
   const [favError, setFavError] = useState("");
   const [lastAction, setLastAction] = useState("");
 
+  const [lastSearch, setLastSearch] = useState(null);
+
   const apiUrl = useMemo(
     () => import.meta.env.VITE_API_URL || "http://localhost:4000",
     []
@@ -99,12 +101,36 @@ export default function App() {
     loadInitial();
   }, []);
 
-  async function handleAnimeTop() {
+  function buildFilters() {
+    const filters = {
+      genres: selectedGenre || undefined,
+      type: selectedType || undefined,
+      status: selectedStatus || undefined,
+      order_by: orderBy || undefined,
+      min_score: minScore || undefined,
+      max_score: maxScore || undefined
+    };
+
+    if (orderBy) {
+      filters.sort = sort || "desc";
+    }
+
+    return filters;
+  }
+
+  function hasAnyFilter(filters) {
+    return Object.values(filters).some((value) => value !== undefined && value !== "");
+  }
+
+  async function executeSearch(query, filters, remember = true) {
     setAnimeError("");
     setAnimeLoading(true);
     try {
-      const data = await getAnimeTop();
+      const data = await searchAnime(query, filters);
       setAnimeItems(data?.data || []);
+      if (remember) {
+        setLastSearch({ type: "search", query, filters });
+      }
     } catch (err) {
       setAnimeError(err.message);
     } finally {
@@ -112,30 +138,45 @@ export default function App() {
     }
   }
 
-  async function handleAnimeSearch() {
+  async function handleAnimeTop() {
     setAnimeError("");
-    if (!animeQuery.trim()) {
-      setAnimeError("Escribe un titulo para buscar.");
-      return;
-    }
     setAnimeLoading(true);
     try {
-      const filters = {
-        genres: selectedGenre || undefined,
-        type: selectedType || undefined,
-        status: selectedStatus || undefined,
-        order_by: orderBy || undefined,
-        sort: sort || undefined,
-        min_score: minScore || undefined,
-        max_score: maxScore || undefined
-      };
-      const data = await searchAnime(animeQuery.trim(), filters);
+      const data = await getAnimeTop();
       setAnimeItems(data?.data || []);
+      setLastSearch({ type: "top" });
     } catch (err) {
       setAnimeError(err.message);
     } finally {
       setAnimeLoading(false);
     }
+  }
+
+  function handleAnimeSearch(event) {
+    if (event) event.preventDefault();
+    const query = animeQuery.trim();
+    const filters = buildFilters();
+
+    if (!query && !hasAnyFilter(filters)) {
+      setAnimeError("Escribe un titulo o selecciona algun filtro.");
+      return;
+    }
+
+    executeSearch(query, filters);
+  }
+
+  async function handleRefresh() {
+    if (lastSearch?.type === "top") {
+      await handleAnimeTop();
+      return;
+    }
+
+    if (lastSearch?.type === "search") {
+      await executeSearch(lastSearch.query, lastSearch.filters, false);
+      return;
+    }
+
+    await handleAnimeTop();
   }
 
   async function handleAddFavorito(item) {
@@ -190,11 +231,19 @@ export default function App() {
         </div>
       </header>
 
-      <section className="panel">
-        <h2>Explorar anime</h2>
-        <div className="anime-controls">
-          <button onClick={handleAnimeTop}>Top anime</button>
-          <label className="anime-search">
+      <section className="panel hero-panel">
+        <div className="hero-panel__copy">
+          <h2>Explorar anime</h2>
+          <p>
+            Usa los filtros para encontrar tu proximo anime favorito. Puedes buscar solo por
+            genero sin escribir titulo.
+          </p>
+        </div>
+        <form className="anime-controls" onSubmit={handleAnimeSearch}>
+          <button type="button" className="ghost" onClick={handleAnimeTop}>
+            Top anime
+          </button>
+          <label>
             Buscar por titulo
             <input
               value={animeQuery}
@@ -202,7 +251,7 @@ export default function App() {
               placeholder="Ej: Fullmetal Alchemist"
             />
           </label>
-          <label className="anime-search">
+          <label>
             Genero
             <select
               value={selectedGenre}
@@ -216,7 +265,7 @@ export default function App() {
               ))}
             </select>
           </label>
-          <label className="anime-search">
+          <label>
             Tipo
             <select
               value={selectedType}
@@ -229,7 +278,7 @@ export default function App() {
               ))}
             </select>
           </label>
-          <label className="anime-search">
+          <label>
             Estado
             <select
               value={selectedStatus}
@@ -242,7 +291,7 @@ export default function App() {
               ))}
             </select>
           </label>
-          <label className="anime-search">
+          <label>
             Ordenar por
             <select value={orderBy} onChange={(event) => setOrderBy(event.target.value)}>
               {ORDER_OPTIONS.map((option) => (
@@ -252,7 +301,7 @@ export default function App() {
               ))}
             </select>
           </label>
-          <label className="anime-search">
+          <label>
             Orden
             <select value={sort} onChange={(event) => setSort(event.target.value)}>
               {SORT_OPTIONS.map((option) => (
@@ -262,7 +311,7 @@ export default function App() {
               ))}
             </select>
           </label>
-          <label className="anime-search">
+          <label>
             Score min
             <input
               type="number"
@@ -274,7 +323,7 @@ export default function App() {
               placeholder="0"
             />
           </label>
-          <label className="anime-search">
+          <label>
             Score max
             <input
               type="number"
@@ -286,8 +335,13 @@ export default function App() {
               placeholder="10"
             />
           </label>
-          <button onClick={handleAnimeSearch}>Buscar</button>
-        </div>
+          <div className="anime-actions">
+            <button type="submit">Buscar</button>
+            <button type="button" className="ghost" onClick={handleRefresh}>
+              Refrescar
+            </button>
+          </div>
+        </form>
         {animeLoading && <p className="hint">Cargando anime...</p>}
         {animeError && <p className="error">{animeError}</p>}
       </section>
@@ -343,11 +397,18 @@ export default function App() {
           <ul className="favoritos">
             {favoritos.map((fav) => (
               <li key={fav._id}>
-                <div>
-                  <h4>{fav.title}</h4>
-                  <p>
-                    Score: {fav.score ?? "N/A"} · Ano: {fav.year ?? "?"}
-                  </p>
+                <div className="fav-info">
+                  {fav.image ? (
+                    <img src={fav.image} alt={fav.title} loading="lazy" />
+                  ) : (
+                    <div className="fav-placeholder">N/A</div>
+                  )}
+                  <div>
+                    <h4>{fav.title}</h4>
+                    <p>
+                      Score: {fav.score ?? "N/A"} · Ano: {fav.year ?? "?"}
+                    </p>
+                  </div>
                 </div>
                 <button
                   type="button"

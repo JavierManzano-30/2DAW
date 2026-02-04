@@ -28,7 +28,8 @@ export async function getAnimeGenres() {
 }
 
 export async function searchAnime(query, filters = {}) {
-  const params = new URLSearchParams({ q: query });
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
   Object.entries(filters).forEach(([key, value]) => {
     if (value === undefined || value === null || value === "") return;
     params.set(key, String(value));

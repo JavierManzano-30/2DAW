@@ -20,7 +20,7 @@ async function proxyJikan(url, res) {
   }
 }
 
-router.get("/genres", (req, res) => {
+router.get("/genres", (_req, res) => {
   const url = `${BASE_URL}/genres/anime`;
   return proxyJikan(url, res);
 });
@@ -34,14 +34,6 @@ router.get("/top", (req, res) => {
 router.get("/search", (req, res) => {
   const query = String(req.query.q || req.query.query || "").trim();
 
-  if (!query) {
-    return res.status(400).json({ error: "query es obligatorio" });
-  }
-
-  const params = new URLSearchParams();
-  params.set("q", query);
-  params.set("limit", String(Number(req.query.limit) || 10));
-
   const allowed = [
     "type",
     "status",
@@ -54,6 +46,19 @@ router.get("/search", (req, res) => {
     "genres",
     "sfw"
   ];
+
+  const hasFilters = allowed.some((key) => {
+    const value = req.query[key];
+    return value !== undefined && value !== "";
+  });
+
+  if (!query && !hasFilters) {
+    return res.status(400).json({ error: "query o filtros son obligatorios" });
+  }
+
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  params.set("limit", String(Number(req.query.limit) || 10));
 
   allowed.forEach((key) => {
     const value = req.query[key];

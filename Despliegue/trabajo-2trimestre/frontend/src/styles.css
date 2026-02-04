@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
 :root {
   color-scheme: light;
-  font-family: "Helvetica Neue", "Segoe UI", sans-serif;
-  background-color: #f6f3ee;
-  color: #1f1b16;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  background-color: #0f131a;
+  color: #11121a;
 }
 
 * {
@@ -11,13 +13,13 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #fdf6ec 0%, #f6f3ee 60%, #efe8df 100%);
+  background: radial-gradient(circle at 20% 10%, #ffe7c4 0%, #f7efe6 40%, #f3e7d9 100%);
 }
 
 .page {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 36px 24px 80px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -29,16 +31,16 @@ body {
   gap: 16px;
   justify-content: space-between;
   align-items: center;
-  background: #fff9f0;
-  border: 1px solid #e7d9c6;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 12px 24px rgba(48, 34, 18, 0.08);
+  background: linear-gradient(135deg, #fff8ef 0%, #fff2e2 60%, #fdebd1 100%);
+  border: 1px solid #efddc7;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 18px 36px rgba(88, 62, 32, 0.18);
 }
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   font-size: 11px;
   font-weight: 700;
   margin: 0 0 8px;
@@ -46,8 +48,13 @@ body {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 38px;
   margin: 0 0 8px;
+}
+
+h2,
+h3 {
+  margin: 0 0 12px;
 }
 
 .sub {
@@ -66,23 +73,46 @@ h1 {
 .pill {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 999px;
-  background: #f2e5d2;
-  color: #6a4b24;
+  background: #1b1b1b;
+  color: #fff0d8;
   font-weight: 600;
 }
 
 .pill--loading {
-  background: #ffe4c2;
+  background: #ff9d4d;
+  color: #2b1502;
 }
 
 .panel {
   background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid #ecdcc7;
-  padding: 20px;
-  box-shadow: 0 10px 18px rgba(42, 30, 16, 0.06);
+  border-radius: 22px;
+  border: 1px solid #efe0cd;
+  padding: 22px;
+  box-shadow: 0 16px 28px rgba(70, 45, 18, 0.1);
+}
+
+.hero-panel {
+  background: linear-gradient(130deg, #fff8f0 0%, #fff2df 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  top: -120px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255, 182, 102, 0.35), transparent 70%);
+}
+
+.hero-panel__copy {
+  max-width: 520px;
+  margin-bottom: 12px;
+  color: #5b4428;
 }
 
 button {
@@ -91,7 +121,7 @@ button {
   color: #3b220a;
   padding: 10px 16px;
   font-weight: 700;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -99,6 +129,11 @@ button {
 button:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(59, 34, 10, 0.2);
+}
+
+button.ghost {
+  background: #fff0db;
+  border: 1px solid #e7caa5;
 }
 
 label {
@@ -113,7 +148,7 @@ input,
 select,
 textarea {
   border: 1px solid #dec9b1;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px 12px;
   font-size: 14px;
   background: #fffdf9;
@@ -122,32 +157,36 @@ textarea {
 .anime-controls {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
+  gap: 14px;
   align-items: end;
 }
 
-.anime-controls button {
-  align-self: end;
-}
-
-.anime-search {
-  min-width: 160px;
+.anime-actions {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
 }
 
 .anime-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
 .anime-card {
   display: flex;
   flex-direction: column;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid #edd9c5;
   background: #fffaf4;
   overflow: hidden;
   height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.anime-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 30px rgba(80, 53, 22, 0.18);
 }
 
 .anime-card img {
@@ -167,7 +206,7 @@ textarea {
 }
 
 .anime-body {
-  padding: 12px 14px 16px;
+  padding: 14px 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -210,19 +249,42 @@ textarea {
 .favoritos li {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #f9f1e7;
   border: 1px solid #ead7c2;
+}
+
+.fav-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fav-info img,
+.fav-placeholder {
+  width: 52px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #f0e1cf;
+}
+
+.fav-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7a5a37;
+  font-weight: 600;
 }
 
 .id-chip {
   background: #fff3e1;
   color: #6a4b24;
   border: 1px solid #e8d2b8;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
@@ -236,7 +298,7 @@ textarea {
 }
 
 .error {
-  color: #9b2c2c;
+  color: #b93434;
   font-weight: 700;
   margin-top: 12px;
 }
@@ -254,5 +316,9 @@ textarea {
 
   .status {
     text-align: left;
+  }
+
+  .anime-actions {
+    justify-content: flex-start;
   }
 }
