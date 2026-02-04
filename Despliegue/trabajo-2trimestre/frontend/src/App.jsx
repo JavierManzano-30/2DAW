@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   addFavorito,
   getAnimeGenres,
@@ -74,6 +74,7 @@ export default function App() {
   const [lastAction, setLastAction] = useState("");
 
   const [lastSearch, setLastSearch] = useState(null);
+  const autoSearchRef = useRef(false);
 
   const apiUrl = useMemo(
     () => import.meta.env.VITE_API_URL || "http://localhost:4000",
@@ -164,6 +165,35 @@ export default function App() {
 
     executeSearch(query, filters);
   }
+
+  useEffect(() => {
+    if (!autoSearchRef.current) {
+      autoSearchRef.current = true;
+      return;
+    }
+
+    const query = animeQuery.trim();
+    const filters = buildFilters();
+
+    if (!query && !hasAnyFilter(filters)) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      executeSearch(query, filters);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [
+    animeQuery,
+    selectedGenre,
+    selectedType,
+    selectedStatus,
+    orderBy,
+    sort,
+    minScore,
+    maxScore
+  ]);
 
   async function handleRefresh() {
     if (lastSearch?.type === "top") {
