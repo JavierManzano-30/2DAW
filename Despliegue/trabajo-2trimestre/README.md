@@ -6,6 +6,20 @@ Este README deja organizadas las evidencias pedidas en 3 bloques:
 - Backend (Node/Express + Render)
 - MongoDB Atlas + Mongoose
 
+## URLs publicas
+
+- Frontend (Vercel): `https://despliegue-lemon.vercel.app/`
+- Backend/API (Render): `https://despliegue-e8e6.onrender.com/`
+- MongoDB Atlas: cluster activo en panel de Atlas (capturas incluidas abajo)
+
+## Proceso seguido (resumen)
+
+1. Desarrollo del frontend SPA en React para consumir la API mediante peticiones HTTP.
+2. Desarrollo del backend con Node.js + Express y rutas REST para datos de anime/favoritos.
+3. Configuracion de MongoDB Atlas y conexion con Mongoose usando variable de entorno `MONGO_URI`.
+4. Despliegue del backend en Render y del frontend en Vercel.
+5. Verificacion de funcionamiento con capturas de codigo, dashboards de despliegue y respuestas de la API.
+
 ## BLOQUE 1 - FRONTEND (React + Vercel)
 
 ### Captura 1 - Estructura del proyecto frontend
@@ -61,3 +75,16 @@ Este README deja organizadas las evidencias pedidas en 3 bloques:
 
 ### Captura 16 - GET con MongoDB
 ![Captura 16 - GET Atlas](img/15.getfav-atlasdb.png)
+
+## Comprobaciones funcionales
+
+- Consulta de datos: realizada y evidenciada en `img/10.api-backend.png`, `img/10.1.api-backend.png` y `img/15.getfav-atlasdb.png`.
+- Creacion de datos: realizada desde la aplicacion frontend al guardar favoritos (endpoint `POST /favoritos`).
+- Eliminacion de datos: realizada desde la aplicacion frontend al quitar favoritos (endpoint `DELETE /favoritos/:id`).
+- Persistencia en MongoDB: evidenciada con capturas de cluster, colecciones y conexion (`img/11.cluster-atlasdb.png`, `img/12.Collections--atlasdb.png`, `img/13.connect-atlasdb.png`).
+
+## Estructura del repositorio
+
+- `frontend/`: SPA en React (Vite).
+- `backend/`: API en Node.js/Express + Mongoose.
+- `img/`: evidencias visuales de codigo, despliegue y base de datos.
